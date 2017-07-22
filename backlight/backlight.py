@@ -1,3 +1,4 @@
+#From https://gist.github.com/lindsaylandry
 import os
 from time import sleep
 import RPi.GPIO as GPIO
