@@ -30,6 +30,9 @@ disable_audio_dither=1
 #Pull GPIO high to keep power circuits on
 dtoverlay=gpio-poweroff,gpiopin=27,active_low="y"
 
+#Pull GPIO high to set backlight to 100%. This will be replaced with code that uses PWM to adjust brightness.
+dtoverlay=gpio-poweroff,gpiopin=19,active_low="y"
+
 #I2C from CSI pins
 dtoverlay=i2c0-bcm2708,sda0_pin=28,scl0_pin=29
  

@@ -35,7 +35,7 @@ class Adafruit_I2C(object):
         return 0
     except:
       return 0
-
+#Modified to return 0 regardless of version detected, so the code will use I2C-0 only. The detection code can be removed for the PSPi.
   @staticmethod
   def getPiI2CBusNumber():
     # Gets the I2C bus number /dev/i2c#
