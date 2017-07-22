@@ -4,6 +4,7 @@
 
 #Enable/disable the optional hardware interfaces
 dtparam=i2c_arm=off
+dtparam=i2c1=off
 dtparam=i2s=off
 dtparam=spi=off
 dtparam=i2c_vc=on
