@@ -24,6 +24,9 @@ dtoverlay=pwm,pin=18,func=2
 #Reduce PWM Audio Noise
 disable_audio_dither=1
 
+#Test
+#audio_pwm_mode=2
+
 #Pull GPIO high to keep power circuits on
 dtoverlay=gpio-poweroff,gpiopin=27,active_low="y"
 
