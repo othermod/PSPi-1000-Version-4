@@ -2,7 +2,7 @@
 
 https://discord.gg/V96c3JC Version 4 discussion on Discord
 
-Project Features:
+**Project Features:**
 
 ADS1015 for joystick and battery detection (needs tweaking for V4 and 5.2v operation)
 
@@ -12,7 +12,7 @@ MCP23017 for buttons (Works Great)
 
 ATmega (aka Arduino) NOT used for buttons
 
-Goals:
+**Goals:**
 
 Integrate everything for buttons, joystick, and dimming into a single file
 
