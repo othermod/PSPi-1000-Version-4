@@ -9,3 +9,5 @@ MCP23017 for buttons (Works Great)
 Audio circuit similar to Pi 2
 
 Hoping to integrate everything for buttons, joystick, and dimming into a single file
+
+https://discord.gg/V96c3JC Version discussion on Discord
