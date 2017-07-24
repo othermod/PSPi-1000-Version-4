@@ -24,7 +24,7 @@ dtoverlay=pwm,pin=18,func=2
 #Reduce PWM Audio Noise
 disable_audio_dither=1
 
-#Test
+#Test this
 #audio_pwm_mode=2
 
 #Pull GPIO high to keep power circuits on
@@ -33,8 +33,8 @@ dtoverlay=gpio-poweroff,gpiopin=27,active_low="y"
 #Pull GPIO high to set backlight to 100%. This will be replaced with code that uses PWM to adjust brightness.
 dtoverlay=gpio-poweroff,gpiopin=19,active_low="y"
 
-#I2C from CSI pins
-dtoverlay=i2c0-bcm2708,sda0_pin=28,scl0_pin=29
+#I2C from CSI pins. Shouldn't be needed when using "dtparam=i2c_vc=on"
+#dtoverlay=i2c0-bcm2708,sda0_pin=28,scl0_pin=29
  
 #Set screen size and any overscan required
 overscan_left=0
