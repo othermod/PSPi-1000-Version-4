@@ -8,18 +8,19 @@ from Adafruit_ADS1x15 import ADS1x15
 # BCM GPIO PIN : ASCII KEYBOARD MAPPING (25 used by PiTFT)
 # You can change the BCM GPIO map and corresponding key press event here
 # Console: #13 BTN1, #16 BTN2, #19 BTN3, #20 BTN4, #21 BTN5
+# A single button is needed to initiate configuration in RetroPie
 buttons = {
-        15 : uinput.BTN_JOYSTICK
+        27 : uinput.BTN_JOYSTICK
         }
 
 # Joystick AXIS mapping to ADC channels
-Y_AXIS = 0
-X_AXIS = 1
+X_AXIS = 0
+Y_AXIS = 1
 
 # Hardware settings
 ADS1015 = 0x00  # 12-bit ADC
-DZONE = 200 # dead zone applied to joystick (mV)
-VREF = 5200 # joystick Vcc (mV)
+DZONE = 500 # dead zone applied to joystick (mV)
+VREF = 5370 # joystick Vcc (mV), will be 5200 in final build
 
 # ---- OPTIONS END ----
 #=======================
@@ -28,7 +29,7 @@ state = {x : 0 for x in buttons} # button internal state
 
 # Initialise the ADC using the default mode (use default I2C address)
 adc = ADS1x15(ic=ADS1015)
-gain = 4096
+gain = 6144
 sps = 250
 
 # Initialise the joystick events, mapped between the voltage readings of the ADC:
@@ -47,8 +48,8 @@ device = uinput.Device(events)
 time.sleep(1)
 
 # center sticks
-#device.emit(uinput.ABS_X, VREF/2, syn=False);
-#device.emit(uinput.ABS_Y, VREF/2);
+device.emit(uinput.ABS_X, VREF/2, syn=False);
+device.emit(uinput.ABS_Y, VREF/2);
 
 # Function to read data from I2C chip using Adafruit lib
 # Channel must be an integer 0-3
@@ -60,8 +61,9 @@ def ReadChannel(channel):
 # Maps ADC reading to Joystick position
 def digitalJoy(axis):
     value = int(ReadChannel(axis))
-    #print value
-	# If the stick moved in a direction outside the deadzone
+#    print value
+	# If the stick moved in a direction outside the deadzone 
+	# Added some math to increase the joystick range
     if (value > (VREF/2 + DZONE)) or (value < (VREF/2 - DZONE)):
         if axis == X_AXIS:
             device.emit(uinput.ABS_X, value + 100 - 200 * (value < VREF/2 - DZONE) + 200 * (value > VREF/2 + DZONE))
@@ -70,9 +72,9 @@ def digitalJoy(axis):
     # center the sticks
     else: 
         if axis == X_AXIS:
-            device.emit(uinput.ABS_X, value + 100 - 200 * (value < VREF/2 - DZONE) + 200 * (value > VREF/2 + DZONE))
+            device.emit(uinput.ABS_X, VREF/2)
         else:
-            device.emit(uinput.ABS_Y, value - 100 - 200 * (value < VREF/2 - DZONE) + 200 * (value > VREF/2 + DZONE))
+            device.emit(uinput.ABS_Y, VREF/2)
 
 # Read and sets state of GPIO buttons
 def setState(state, button, key):
@@ -96,4 +98,4 @@ while True:
     digitalJoy(Y_AXIS)
     digitalJoy(X_AXIS)
 
-    time.sleep(.02)
+    time.sleep(0.1)
