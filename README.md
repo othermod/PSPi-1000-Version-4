@@ -1,6 +1,6 @@
 # PSPi Version 4 Software
 
-https://discord.gg/V96c3JC Version 4 discussion on Discord
+https://discord.gg/aR5jzUY Version 4 discussion on Discord
 
 **Project Features:**
 
