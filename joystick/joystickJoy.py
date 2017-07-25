@@ -66,9 +66,9 @@ def digitalJoy(axis):
 	# Added some math to increase the joystick range
     if (value > (VREF/2 + DZONE)) or (value < (VREF/2 - DZONE)):
         if axis == X_AXIS:
-            device.emit(uinput.ABS_X, value + 100 - 200 * (value < VREF/2 - DZONE) + 200 * (value > VREF/2 + DZONE))
+            device.emit(uinput.ABS_X, value - 100 - 200 * (value < VREF/2 - DZONE) + 200 * (value > VREF/2 + DZONE))
         else:
-            device.emit(uinput.ABS_Y, value - 100 - 200 * (value < VREF/2 - DZONE) + 200 * (value > VREF/2 + DZONE))
+            device.emit(uinput.ABS_Y, value + 100 - 200 * (value < VREF/2 - DZONE) + 200 * (value > VREF/2 + DZONE))
     # center the sticks
     else: 
         if axis == X_AXIS:
@@ -98,4 +98,4 @@ while True:
     digitalJoy(Y_AXIS)
     digitalJoy(X_AXIS)
 
-    time.sleep(0.1)
+    time.sleep(0.02)
