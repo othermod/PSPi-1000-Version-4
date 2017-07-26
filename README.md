@@ -4,13 +4,17 @@ https://discord.gg/aR5jzUY Version 4 discussion on Discord
 
 **Project Features:**
 
-ATmega (aka Arduino) NOT used for buttons and joystick, meaning the USB is left available
+ATmega (aka Arduino) is NOT used for buttons and joystick, meaning the USB is left available
 
-ADS1015 for joystick and battery detection (needs tweaking for V4 and 5.2v operation)
+ADS1015 for joystick and battery detection
 
-MCP23017 for buttons (Works Great)
+MCP23017 for buttons
 
 4.3" LCD, driven by GPIO using custom overlay
+
+**In Progress*
+
+Add code to joystick's python script to detect battery voltage.
 
 **Goals:**
 
@@ -18,4 +22,4 @@ Integrate everything for buttons, joystick, and dimming into a single file
 
 Have a battery meter in EmulationStation (maybe even within games?)
 
-Improve audio quality (currently uses an audio circuit similar to Pi 2)
+Improve audio quality in hardware and software. It currently uses an audio circuit similar to the Pi 2 (buffer-filter-amplifier).
