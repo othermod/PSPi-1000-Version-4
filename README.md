@@ -12,7 +12,7 @@ MCP23017 for buttons
 
 4.3" LCD, driven by GPIO using custom overlay
 
-**In Progress*
+**In Progress:**
 
 Add code to joystick's python script to detect battery voltage.
 
