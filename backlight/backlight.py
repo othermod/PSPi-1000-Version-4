@@ -3,7 +3,7 @@ import os
 from time import sleep
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(11, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 os.system("gpio -g mode 19 pwm")
 os.system("gpio -g pwm 19 1023")
@@ -19,11 +19,11 @@ def my_callback(channel):
   else:
     i = i + 1
   os.system("gpio -g pwm 19 %s" % nums[i])
-  GPIO.remove_event_detect(27)
+  GPIO.remove_event_detect(11)
   sleep(0.1)
-  GPIO.add_event_detect(27, GPIO.FALLING, callback=my_callback, bouncetime=300)
+  GPIO.add_event_detect(11, GPIO.FALLING, callback=my_callback, bouncetime=300)
 
-GPIO.add_event_detect(27, GPIO.FALLING, callback=my_callback, bouncetime=300)
+GPIO.add_event_detect(11, GPIO.FALLING, callback=my_callback, bouncetime=300)
 
 try:
   while True:
