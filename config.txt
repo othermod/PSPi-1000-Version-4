@@ -31,10 +31,10 @@ disable_audio_dither=1
 dtoverlay=gpio-poweroff,gpiopin=27,active_low="y"
 
 #Pull GPIO high to set backlight to 100%. This will be replaced with code that uses PWM to adjust brightness.
-dtoverlay=gpio-poweroff,gpiopin=19,active_low="y"
+#dtoverlay=gpio-poweroff,gpiopin=19,active_low="y"
 
-#I2C from CSI pins. Shouldn't be needed when using "dtparam=i2c_vc=on"
-#dtoverlay=i2c0-bcm2708,sda0_pin=28,scl0_pin=29
+#I2C from CSI pins. Shouldn't be needed when using "dtparam=i2c_vc=on". This is required for Zero 1.3, not required for Zero W
+dtoverlay=i2c0-bcm2708,pins_28_29
  
 #Set screen size and any overscan required
 overscan_left=0
