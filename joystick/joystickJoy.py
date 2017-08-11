@@ -1,7 +1,18 @@
 import uinput, time, math
 import RPi.GPIO as GPIO
 from Adafruit_ADS1x15 import ADS1x15
+#!/usr/bin/python
+import array
+import os
+import signal
+import subprocess
+from subprocess import check_output
 
+from config import *
+
+warning = 0
+status = 0
+value = 4200
 # ---- OPTIONS ----
 #===================
 
@@ -10,17 +21,18 @@ from Adafruit_ADS1x15 import ADS1x15
 # Console: #13 BTN1, #16 BTN2, #19 BTN3, #20 BTN4, #21 BTN5
 # A single button is needed to initiate configuration in RetroPie
 buttons = {
-        27 : uinput.BTN_JOYSTICK
+        11 : uinput.BTN_JOYSTICK
         }
 
 # Joystick AXIS mapping to ADC channels
 X_AXIS = 0
 Y_AXIS = 1
+BATTERY = 2
 
 # Hardware settings
 ADS1015 = 0x00  # 12-bit ADC
 DZONE = 500 # dead zone applied to joystick (mV)
-VREF = 5370 # joystick Vcc (mV), will be 5200 in final build
+VREF = 5200 # joystick Vcc (mV), will be 5200 in final build
 
 # ---- OPTIONS END ----
 #=======================
@@ -55,8 +67,31 @@ device.emit(uinput.ABS_Y, VREF/2);
 # Channel must be an integer 0-3
 def ReadChannel(channel):
     data = adc.readADCSingleEnded(channel, gain, sps)
-    #print data
     return data
+	
+	
+def changeicon(percent):
+    i = 0
+    killid = 0
+    os.system(PNGVIEWPATH + "/pngview -b 0 -l 3000" + percent + " -x 460 -y 5 " + ICONPATH + "/battery" + percent + ".png &")
+    if DEBUGMSG == 1:
+        print("Changed battery icon to " + percent + "%")
+    out = check_output("ps aux | grep pngview | awk '{ print $2 }'", shell=True)
+    nums = out.split('\n')
+    for num in nums:
+        i += 1
+        if i == 1:
+            killid = num
+            os.system("sudo kill " + killid)	
+			
+def endProcess(signalnum = None, handler = None):
+    GPIO.cleanup()
+    os.system("sudo killall pngview");
+    exit(0)
+	
+# Prepare handlers for process exit
+signal.signal(signal.SIGTERM, endProcess)
+signal.signal(signal.SIGINT, endProcess)
 
 # Maps ADC reading to Joystick position
 def digitalJoy(axis):
@@ -67,15 +102,19 @@ def digitalJoy(axis):
     if (value > (VREF/2 + DZONE)) or (value < (VREF/2 - DZONE)):
         if axis == X_AXIS:
             device.emit(uinput.ABS_X, value - 100 - 200 * (value < VREF/2 - DZONE) + 200 * (value > VREF/2 + DZONE))
-        else:
+        if axis == Y_AXIS:
             device.emit(uinput.ABS_Y, value + 100 - 200 * (value < VREF/2 - DZONE) + 200 * (value > VREF/2 + DZONE))
     # center the sticks
     else: 
         if axis == X_AXIS:
             device.emit(uinput.ABS_X, VREF/2)
-        else:
+        if axis == Y_AXIS:
             device.emit(uinput.ABS_Y, VREF/2)
+    global value
 
+		
+	
+    
 # Read and sets state of GPIO buttons
 def setState(state, button, key):
     if (not state) and (not GPIO.input(button)):
@@ -89,6 +128,7 @@ def setState(state, button, key):
     return state
 
 # The loop polls GPIO and joystick state every 20ms
+os.system(PNGVIEWPATH + "/pngview -b 0 -l 299999 -x 460 -y 5 " + ICONPATH + "/blank.png &")
 while True:
     # check button states
     for button in buttons:
@@ -96,6 +136,32 @@ while True:
         state[button] = setState(state[button],button,key)
     # check joystick states
     digitalJoy(Y_AXIS)
+#    print value
     digitalJoy(X_AXIS)
-
-    time.sleep(0.02)
+#    print value
+    digitalJoy(BATTERY)
+#    print value
+#    print status
+    global status
+    if value < 3500:
+	changeicon("0")
+	os.system("/usr/bin/omxplayer --no-osd --layer 999999  " + ICONPATH + "/lowbattshutdown.mp4 --alpha 160;sudo shutdown -h now")
+	status = 0
+		
+    elif value < 3600:
+        changeicon("25")
+	if CLIPS == 1:
+		os.system("/usr/bin/omxplayer --no-osd --layer 999999  " + ICONPATH + "/lowbattalert.mp4 --alpha 160")
+    elif value < 3900:
+	if status != 50:
+		changeicon("50")
+	status = 50
+    elif value < 4000:
+	if status != 75:
+		changeicon("75")
+	status = 75
+    else:
+	if status != 100:
+		changeicon("100")      
+	status = 100
+    time.sleep(.02)
