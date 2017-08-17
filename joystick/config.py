@@ -2,7 +2,7 @@
 " Edit below this line to fit your needs
 """
 # Path to pngview (raspidmx) and icons
-PNGVIEWPATH = "/home/raspidmx/pngview"
+PNGVIEWPATH = "/boot/pngview"
 ICONPATH = "/boot/battery/icons"
 
 # Battery icon, LED or videoclips? Or all of them?

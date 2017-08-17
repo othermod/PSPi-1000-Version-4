@@ -16,38 +16,17 @@ import smbus
 class Adafruit_I2C(object):
 
   @staticmethod
-  def getPiRevision():
-    "Gets the version number of the Raspberry Pi board"
-    # Revision list available at: http://elinux.org/RPi_HardwareHistory#Board_Revision_History
-    try:
-      with open('/proc/cpuinfo', 'r') as infile:
-        for line in infile:
-          # Match a line of the form "Revision : 0002" while ignoring extra
-          # info in front of the revsion (like 1000 when the Pi was over-volted).
-          match = re.match('Revision\s+:\s+.*(\w{4})$', line)
-          if match and match.group(1) in ['0000', '0002', '0003']:
-            # Return revision 1 if revision ends with 0000, 0002 or 0003.
-            return 1
-          elif match:
-            # Assume revision 2 if revision ends with any other 4 chars.
-            return 2
-        # Couldn't find the revision, assume revision 0 like older code for compatibility.
-        return 0
-    except:
-      return 0
-#Modified to return 0 regardless of version detected, so the code will use I2C-0 only. The detection code can be removed for the PSPi.
-  @staticmethod
   def getPiI2CBusNumber():
     # Gets the I2C bus number /dev/i2c#
-    return 1 if Adafruit_I2C.getPiRevision() > 1 else 0
+    return 0
 
   def __init__(self, address, busnum=-1, debug=False):
     self.address = address
     # By default, the correct I2C bus is auto-detected using /proc/cpuinfo
     # Alternatively, you can hard-code the bus version below:
-    # self.bus = smbus.SMBus(0); # Force I2C0 (early 256MB Pi's)
+    self.bus = smbus.SMBus(0); # Force I2C0 (early 256MB Pi's)
     # self.bus = smbus.SMBus(1); # Force I2C1 (512MB Pi's)
-    self.bus = smbus.SMBus(busnum if busnum >= 0 else Adafruit_I2C.getPiI2CBusNumber())
+    # self.bus = smbus.SMBus(busnum if busnum >= 0 else Adafruit_I2C.getPiI2CBusNumber())
     self.debug = debug
 
   def reverseByteOrder(self, data):

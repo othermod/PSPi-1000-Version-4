@@ -141,27 +141,51 @@ while True:
 #    print value
     digitalJoy(BATTERY)
 #    print value
+#    print (time.strftime("%H:%M:%S"))
 #    print status
     global status
-    if value < 3500:
+    if value < 0: #3500
 	changeicon("0")
 	os.system("/usr/bin/omxplayer --no-osd --layer 999999  " + ICONPATH + "/lowbattshutdown.mp4 --alpha 160;sudo shutdown -h now")
 	status = 0
 		
-    elif value < 3600:
-        changeicon("25")
+    elif value < 0: #3657
+        changeicon("12")
 	if CLIPS == 1:
 		os.system("/usr/bin/omxplayer --no-osd --layer 999999  " + ICONPATH + "/lowbattalert.mp4 --alpha 160")
-    elif value < 3900:
+		
+    elif value < 3723:
+	if status != 25:
+		changeicon("25")
+	status = 25
+
+    elif value < 3756:
+	if status != 38:
+		changeicon("38")
+	status = 38
+
+    elif value < 3798:
 	if status != 50:
 		changeicon("50")
-	status = 50
-    elif value < 4000:
+	status = 50	
+		
+    elif value < 3876:
+	if status != 62:
+		changeicon("62")
+	status = 62
+	
+    elif value < 3963:
 	if status != 75:
 		changeicon("75")
 	status = 75
+	
+    elif value < 4059:
+	if status != 88:
+		changeicon("88")
+	status = 88
+	
     else:
 	if status != 100:
 		changeicon("100")      
 	status = 100
-    time.sleep(.02)
+    time.sleep(.05)
