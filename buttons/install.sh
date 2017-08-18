@@ -93,14 +93,3 @@ else
 	# Insert retrogame into rc.local before final 'exit 0'
 	sed -i "s/^exit 0/\/usr\/local\/bin\/retrogame \&\\nexit 0/g" /etc/rc.local >/dev/null
 fi
-echo "Complete. Reboot is required."
-	echo
-echo "Reboot now? [y/n]"
-read
-if [[ "$REPLY" =~ ^(yes|y|Y)$ ]]; then
-	echo "Rebooting..."
-	reboot
-#else
-	echo
-	echo "Done"
-fi
