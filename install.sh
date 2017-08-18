@@ -12,8 +12,8 @@ bash apt-get/install.sh
 bash buttons/install.sh
 bash pigpio/install.sh
 bash joystick/install.sh
-python python-uinput-master/setup.py install
-sudo make install
+bash python-uinput-master/install.sh
+
 
 
 echo "Complete. Reboot is required."
