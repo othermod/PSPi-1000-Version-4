@@ -144,12 +144,12 @@ while True:
 #    print (time.strftime("%H:%M:%S"))
 #    print status
     global status
-    if value < 0: #3500
+    if value < 3500: #change to 0 during troubleshooting
 	changeicon("0")
 	os.system("/usr/bin/omxplayer --no-osd --layer 999999  " + ICONPATH + "/lowbattshutdown.mp4 --alpha 160;sudo shutdown -h now")
 	status = 0
 		
-    elif value < 0: #3657
+    elif value < 3657: #change to 0 during troubleshooting
         changeicon("12")
 	if CLIPS == 1:
 		os.system("/usr/bin/omxplayer --no-osd --layer 999999  " + ICONPATH + "/lowbattalert.mp4 --alpha 160")
