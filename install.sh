@@ -8,11 +8,11 @@ if [ $(id -u) -ne 0 ]; then
 	exit 1
 fi
 
-bash apt-get/install.sh
+#bash apt-get/install.sh
 bash buttons/install.sh
 bash pigpio/install.sh
 bash joystick/install.sh
-bash python-uinput-master/install.sh
+bash /boot/uinput/python setup.py install
 
 
 

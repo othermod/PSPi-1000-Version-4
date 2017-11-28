@@ -9,16 +9,16 @@ if [ $(id -u) -ne 0 ]; then
 fi
 
 
-echo "Configuring joystickJoy to start at boot..."
+echo "Configuring joystick to start at boot..."
 
-grep joystickJoy /etc/rc.local >/dev/null
+grep joystick /etc/rc.local >/dev/null
 if [ $? -eq 0 ]; then
-	echo "joystickJoy already exists in rc.local. Re-creating."
-	# joystickJoy already in rc.local, but make sure correct:
-	sed -i "s/^.*joystickJoy.*$/python \/boot\/joystick\/joystickJoy.py \&/g" /etc/rc.local >/dev/null
+	echo "joystick already exists in rc.local. Re-creating."
+	# joystick already in rc.local, but make sure correct:
+	sed -i "s/^.*joystick.*$/python \/boot\/examples\/joystick.py \&/g" /etc/rc.local >/dev/null
 else
-	echo "joystickJoy doesn't exist in rc.local. Creating."
-	# Insert joystickJoy into rc.local before final 'exit 0'
-	sed -i "s/^exit 0/python \/boot\/joystick\/joystickJoy.py \&\\nexit 0/g" /etc/rc.local >/dev/null
+	echo "joystick doesn't exist in rc.local. Creating."
+	# Insert joystick into rc.local before final 'exit 0'
+	sed -i "s/^exit 0/python \/boot\/examples\/joystick.py \&\\nexit 0/g" /etc/rc.local >/dev/null
 fi
 
