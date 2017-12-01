@@ -16,13 +16,10 @@ Compatibility with Pi Zero
 
 **In Progress:**
 
-Add code to joystick's python script to detect battery voltage.
+Total overhaul of all code. More efficient and stable.
 
-Integrate shutdown, joystick, LCD dimming, battery detection, into a single file. Buttons may be a separate file for simplicity.
+**Goals:**
 
-**Goals and Help Needed:**
+Improve efficiency of joystick/battery code using overlays
 
-Have a battery meter in EmulationStation and games
-
-Maintain Pi 3 software compatibility and work around Pi 3 defect (need to figure out how to use the I2C-0 bus from the camera connector)
-
+Combine code using C instead of Python where possible
