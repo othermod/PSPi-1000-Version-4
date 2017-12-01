@@ -1,0 +1,65 @@
+/*
+ * Copyright (C) 2013 Bas Laarhoven
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * DT overlay for BeBoPr and BeagleBone (white)
+ *
+ * history:
+ * 2013-08-05 SJL - Created from old 2191 overlay.
+ *                  Limit compatibility to BeagleBone (White).
+ *                  Use original (2-signal) BeBoPr enable scheme.
+ *                  Removed non-functional io-enable sysfs interface.
+ * 2013-08-11 SJL - Merged changes from cape-bebopr-ena-R2.dts
+ */
+/dts-v1/;
+/plugin/;
+	/* ----------- ADS1015 ------------ */
+/ { compatible = "brcm,bcm2708";
+	fragment@0 {
+		target = <&i2c0>;
+		__overlay__ {
+			// needed to avoid gripping by DTC
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "okay";	// probably already set
+
+			ads1015: ads1015@48 {
+
+				compatible = "ti,ads1015";
+				status = "okay";
+
+				#address-cells = <1>;
+				#size-cells = <0>;
+				reg = <0x48>;
+
+				hi_res = <1>;
+
+				channel@1 {
+					  reg = <4>;
+					  ti,gain = <(2/3)>;
+					  ti,datarate = <2>;
+				};
+				channel@2 {
+					  reg = <5>;
+					  ti,gain = <(2/3)>;
+					  ti,datarate = <2>;
+				};
+				channel@3 {
+					  reg = <6>;
+					  ti,gain = <(2/3)>;
+					  ti,datarate = <2>;
+				};
+				channel@4 {
+					  reg = <7>;
+					  ti,gain = <(2/3)>;
+					  ti,datarate = <2>;
+				};
+			};
+		};
+
+	};
+
+};

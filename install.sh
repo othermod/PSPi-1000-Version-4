@@ -1,6 +1,5 @@
 #!/bin/bash
-# Much of this is borrowed from Adafruit's Retrogame installer
-# It has been modiified for offline installation
+# https://www.othermod.com
 
 if [ $(id -u) -ne 0 ]; then
 	echo "Installer must be run as root."
@@ -9,12 +8,12 @@ if [ $(id -u) -ne 0 ]; then
 fi
 
 #bash apt-get/install.sh
-bash buttons/install.sh
-bash pigpio/install.sh
-bash joystick/install.sh
+bash /boot/buttons/install.sh
+#bash pigpio/install.sh
+bash /boot/joystick/install.sh
+bash /boot/backlight/install.sh
+bash /boot/shutdown/install.sh
 bash /boot/uinput/python setup.py install
-
-
 
 echo "Complete. Reboot is required."
 	echo

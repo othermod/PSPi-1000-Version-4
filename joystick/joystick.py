@@ -10,7 +10,7 @@ from subprocess import check_output
 
 # A button is needed to initiate configuration in RetroPie. Can be removed after RetroPie configuration.
 buttons = {
-       27 : uinput.BTN_JOYSTICK
+      26 : uinput.BTN_JOYSTICK
         }
 
 # Hardware settings

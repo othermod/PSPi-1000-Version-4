@@ -1,35 +1,27 @@
-#From https://gist.github.com/lindsaylandry
-import os
-from time import sleep
 import RPi.GPIO as GPIO
+import time
+import os
+pwmPin = 19
+dc = 1
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(11, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(19, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.setup(26, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
-os.system("gpio -g mode 19 pwm")
-os.system("gpio -g pwm 19 1023")
+def BL(channel):
+	global dc
+	if dc == 1:
+		dc = 0
+		GPIO.setup(19, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+	else:
+		dc = 1
+		GPIO.setup(19, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+#	print dc
 
-nums = [1023, 500, 200, 50]
-i = 0
-
-def my_callback(channel):
-  global i
-  global nums
-  if i >= len(nums) - 1:
-    i = 0
-  else:
-    i = i + 1
-  os.system("gpio -g pwm 19 %s" % nums[i])
-  GPIO.remove_event_detect(11)
-  sleep(0.1)
-  GPIO.add_event_detect(11, GPIO.FALLING, callback=my_callback, bouncetime=300)
-
-GPIO.add_event_detect(11, GPIO.FALLING, callback=my_callback, bouncetime=300)
+GPIO.add_event_detect(26, GPIO.FALLING, callback = BL, bouncetime = 1000)
 
 try:
-  while True:
-    sleep(0.01)
-    pass
+	while 1:
+		time.sleep(1)
+
 except KeyboardInterrupt:
-  GPIO.cleanup()
-  os.system("gpio -g mode 19 in")       # clean up GPIO on CTRL+C exit  
-GPIO.cleanup()           # clean up GPIO on normal exit  
+	GPIO.cleanup()

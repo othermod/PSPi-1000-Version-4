@@ -1,7 +1,3 @@
-# For more options and information see
-# http://www.raspberrypi.org/documentation/configuration/config-txt.md
-# Some settings may impact device functionality. See link above for details
-
 #Enable/disable the optional hardware interfaces
 dtparam=i2c_arm=on
 dtparam=i2c1=off
@@ -34,11 +30,11 @@ dtoverlay=gpio-poweroff,gpiopin=27,active_low="y"
 dtoverlay=i2c0-bcm2708,pins_28_29
 
 #Activity LED next to joystick
-dtparam=act_led_activelow=yes
+#dtparam=act_led_activelow=yes
 dtparam=act_led_gpio=10
 
 #Enable ADC
-dtoverlay=ads1015-5v
+dtoverlay=ads1015m
  
 #Set screen size and any overscan required
 overscan_left=0
@@ -48,7 +44,7 @@ overscan_bottom=0
 framebuffer_width=480
 framebuffer_height=272
  
-#enable DPI
+enable DPI
 enable_dpi_lcd=1
 display_default_lcd=1
 dpi_group=2
