@@ -1,21 +1,27 @@
-#https://www.othermod.com
-#need to remove old portions of code
-
-import uinput, time, math
 #!/usr/bin/python
+#https://www.othermod.com
+
+#need to remove imports that are no longer used
+import uinput, time, math
 import array
 import os
 import signal
 import subprocess
 from subprocess import check_output
 
-debug= 1
 status = 0
+
+#Set debug to 1 to display status
+debug= 0
+
+#number of battery readings to average together
 average = 10
+
+#refresh rate in seconds
+refresh = 6
 
 PNGVIEWPATH = "/boot/battery/pngview"
 ICONPATH = "/boot/battery/icons"
-DEBUGMSG = 0
 	
 def changeicon(number):
     i = 0
@@ -42,19 +48,16 @@ os.system(PNGVIEWPATH + "/pngview -b 0 -l 299999 -x 460 -y 5 " + ICONPATH + "/bl
 a = [int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())] * average
 while True:
     	# check battery states
-	if debug == 1:
-		print a
 	a = [int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())] + a[:-1]
 	bat = sum(a) / average
+	if debug == 1:
+		print bat
 	if bat < 3600: #change to 0 during troubleshooting
 		changeicon("0")
-		os.system("/usr/bin/omxplayer --no-osd --layer 999999  " + ICONPATH + "/lowbattshutdown.mp4 --alpha 160;sudo shutdown -h now")
 		status = 0
 		
     	elif bat < 3657: #change to 0 during troubleshooting
         	changeicon("1")
-		if CLIPS == 1:
-			os.system("/usr/bin/omxplayer --no-osd --layer 999999  " + ICONPATH + "/lowbattalert.mp4 --alpha 160")
 		
     	elif bat < 3723:
 		if status != 2:
@@ -90,5 +93,5 @@ while True:
 		if status != 8:
 			changeicon("8")      
 		status = 8
-    	time.sleep(5)
+    	time.sleep(refresh)
 
