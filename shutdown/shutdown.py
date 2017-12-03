@@ -9,7 +9,6 @@ import os
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
-# Our function on what to do when the button is pressed
 def Shutdown(channel):
 	#Dim backlight before shutdown
 	#Pulls BL pin low, allowing backlight to kill as soon as shutdown completes
