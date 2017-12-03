@@ -2,7 +2,6 @@
 #need to remove old portions of code
 
 import uinput, time, math
-#import RPi.GPIO as GPIO
 #!/usr/bin/python
 import array
 import os
@@ -10,21 +9,20 @@ import signal
 import subprocess
 from subprocess import check_output
 
-
-warning = 0
+debug= 1
 status = 0
-value = 4200
+average = 10
 
 PNGVIEWPATH = "/boot/battery/pngview"
 ICONPATH = "/boot/battery/icons"
 DEBUGMSG = 0
 	
-def changeicon(percent):
+def changeicon(number):
     i = 0
     killid = 0
-    os.system(PNGVIEWPATH + "/pngview -b 0 -l 3000" + percent + " -x 460 -y 5 " + ICONPATH + "/battery" + percent + ".png &")
-    if DEBUGMSG == 1:
-        print("Changed battery icon to " + percent + "%")
+    os.system(PNGVIEWPATH + "/pngview -b 0 -l 3000" + number + " -x 460 -y 5 " + ICONPATH + "/battery" + number + ".png &")
+    if debug == 1:
+        print("Changed battery icon to " + number)
     out = check_output("ps aux | grep pngview | awk '{ print $2 }'", shell=True)
     nums = out.split('\n')
     for num in nums:
@@ -41,22 +39,13 @@ def endProcess(signalnum = None, handler = None):
 
 # The loop polls GPIO and joystick state every 5s
 os.system(PNGVIEWPATH + "/pngview -b 0 -l 299999 -x 460 -y 5 " + ICONPATH + "/blank.png &")
-status = 0
-bat1 = int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())
-bat2 = bat1
-bat3 = bat1
-bat4 = bat1
-bat5 = bat1
+a = [int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())] * average
 while True:
-    # check battery states
-	bat5 = bat4
-	bat4 = bat3
-	bat3 = bat2
-	bat2 = bat1
-	bat1 = int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())
-	a = [bat1, bat2, bat3, bat4, bat5]
-	bat = (sum(a) / len(a))
-#	print bat
+    	# check battery states
+	if debug == 1:
+		print a
+	a = [int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())] + a[:-1]
+	bat = sum(a) / average
 	if bat < 3600: #change to 0 during troubleshooting
 		changeicon("0")
 		os.system("/usr/bin/omxplayer --no-osd --layer 999999  " + ICONPATH + "/lowbattshutdown.mp4 --alpha 160;sudo shutdown -h now")
