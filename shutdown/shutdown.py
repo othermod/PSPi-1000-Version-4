@@ -1,8 +1,5 @@
-
 #!/bin/python
-# Simple script for shutting down the raspberry Pi at the press of a button.
-# by Inderpreet Singh
-
+# Shuts system down when button is pressed. 
 import RPi.GPIO as GPIO
 import time
 import os
@@ -14,6 +11,9 @@ GPIO.setup(4, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 # Our function on what to do when the button is pressed
 def Shutdown(channel):
+	#Dim backlight before shutdown. Pulls BL pin low, allowing backlight to kill as soon as shutdown completes.
+	GPIO.setup(19, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+	#shutddown
     os.system("sudo shutdown -h now")
 
 # Add our function to execute when the button pressed event happens
@@ -21,7 +21,6 @@ GPIO.add_event_detect(4, GPIO.FALLING, callback = Shutdown, bouncetime = 2000)
 
 # Now wait!
 while 1:
-	GPIO.setup(19, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
     time.sleep(1)
 
 
