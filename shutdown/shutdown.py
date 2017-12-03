@@ -21,6 +21,7 @@ GPIO.add_event_detect(4, GPIO.FALLING, callback = Shutdown, bouncetime = 2000)
 
 # Now wait!
 while 1:
+	GPIO.setup(19, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
     time.sleep(1)
 
 
