@@ -1,5 +1,6 @@
 #!/bin/python
-# Shuts system down when button is pressed. 
+# Shuts system down when button is pressed.
+# https://www.othermod.com 
 import RPi.GPIO as GPIO
 import time
 import os
@@ -14,14 +15,14 @@ def Shutdown(channel):
 	#Dim backlight before shutdown. Pulls BL pin low, allowing backlight to kill as soon as shutdown completes.
 	GPIO.setup(19, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 	#shutddown
-    os.system("sudo shutdown -h now")
+	os.system("sudo shutdown -h now")
 
 # Add our function to execute when the button pressed event happens
 GPIO.add_event_detect(4, GPIO.FALLING, callback = Shutdown, bouncetime = 2000)
 
 # Now wait!
 while 1:
-    time.sleep(1)
+	time.sleep(1)
 
 
 
