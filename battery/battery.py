@@ -52,46 +52,56 @@ while True:
 	bat = sum(a) / average
 	if debug == 1:
 		print bat
-	if bat < 3600: #change to 0 during troubleshooting
+	if bat < 3630: #change to 0 during troubleshooting
 		changeicon("0")
 		status = 0
 		
-    	elif bat < 3657: #change to 0 during troubleshooting
+    	elif bat < 3670: #change to 0 during troubleshooting
         	changeicon("1")
 		
-    	elif bat < 3723:
+    	elif bat < 3720:
 		if status != 2:
 			changeicon("2")
 		status = 2
 
-    	elif bat < 3756:
+		elif bat < 3740:
 		if status != 3:
 			changeicon("3")
 		status = 3
 
-    	elif bat < 3798:
+    	elif bat < 3770:
 		if status != 4:
 			changeicon("4")
 		status = 4
-		
-    	elif bat < 3876:
+
+    	elif bat < 3800:
 		if status != 5:
 			changeicon("5")
 		status = 5
-	
-    	elif bat < 3963:
+
+    	elif bat < 3870:
 		if status != 6:
 			changeicon("6")
 		status = 6
-	
-    	elif bat < 4059:
+		
+    	elif bat < 4000:
 		if status != 7:
 			changeicon("7")
 		status = 7
 	
-    	else:
+    	elif bat < 4040:
 		if status != 8:
-			changeicon("8")      
+			changeicon("8")
 		status = 8
+	
+    	elif bat < 4080:
+		if status != 9:
+			changeicon("9")
+		status = 9
+	
+    	else:
+		if status != 10:
+			changeicon("10")      
+		status = 10
     	time.sleep(refresh)
 
