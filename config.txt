@@ -8,6 +8,10 @@ dtparam=i2c_vc=on
 #Enable audio (loads snd_bcm2835)
 dtparam=audio=on
 
+#power reduction
+dtoverlay=pi3-disable-bt
+dtoverlay=pi3-disable-wifi
+
 #Normal PWM stereo audio pins
 #dtoverlay=pwm-2chan,pin=18,func=2,pin2=19,func2=4
 
@@ -25,6 +29,9 @@ disable_audio_dither=1
 
 #Pull GPIO high to keep power circuits on. This is also connected to the LCD backlight initially.
 dtoverlay=gpio-poweroff,gpiopin=27,active_low="y"
+
+#Shutdown - replace python script when RetroPie Stretch is released
+#dtoverlay=gpio-shutdown,gpio_pin=4
 
 #I2C from CSI pins. This is required for Zero 1.3, not required for Zero W
 dtoverlay=i2c0-bcm2708,pins_28_29
@@ -54,3 +61,7 @@ dpi_output_format=458774
 hdmi_timings=480 0 5 0 40 272 0 8 0 8 0 0 0 60 0 9600000 3		
 start_x=1
 gpu_mem=128
+gpu_mem_256=128
+gpu_mem_512=256
+gpu_mem_1024=256
+overscan_scale=1
