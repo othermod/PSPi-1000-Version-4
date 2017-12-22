@@ -10,16 +10,36 @@ ADS1015 for joystick and battery detection
 
 MCP23017 for buttons
 
-4.3" LCD, driven by GPIO using custom overlay
+4.3" LCD, driven by GPIO using custom RGB 565 overlay
 
-Compatibility with Pi Zero 
+Made for Pi Zero and Zero W, compatible with Pi 3
 
-**In Progress:**
+**Current Status**
 
-Total overhaul of all code. More efficient and stable.
+Code is stable, tweaks and improvements will be added
 
-**Goals:**
+**Installation Instructions for Offline Installation - Will be automated later**
 
-Improve efficiency of joystick/battery code using overlays
+Download repository, extract and copy all subfolders to the BOOT partition of a fresh RetroPie image. You must overwrite the original config.txt. Do not copy cmdline.txt yet.
 
-Combine code using C instead of Python where possible
+Boot the PSPi with the SD card inserted, with a USB keyboard attached.
+
+After Emulation Station loads, press F4 on the keyboard to exit to the command line.
+
+*Type the following commands:*
+
+sudo bash /boot/buttons/install.sh
+
+sudo bash /boot/shutdown/install.sh
+
+sudo bash /boot/battery/install.sh
+
+sudo bash /boot/backlight/install.sh
+
+sudo bash /boot/joystick/install.sh
+
+cd /boot/uinput
+
+sudo python setup.py install
+
+sudo reboot
