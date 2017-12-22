@@ -11,7 +11,8 @@ from subprocess import check_output
 
 status = 0
 charging = 0
-#Set debug to 1 to display status
+
+#set debug to 1 to display status
 debug= 0
 
 #number of battery readings to average together
@@ -43,11 +44,13 @@ def endProcess(signalnum = None, handler = None):
     exit(0)
 	
 
-# The loop polls GPIO and joystick state every 5s
+#initial setup of list to average battery readings
 os.system(PNGVIEWPATH + "/pngview -b 0 -l 299999 -x 460 -y 5 " + ICONPATH + "/blank.png &")
 a = [int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())] * average
+
+#loop polls battery and charging state every 5 seconds
 while True:
-    	# check battery states
+# check battery states
 	a = [int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())] + a[:-1]
 	b = int(open('/sys/class/hwmon/hwmon0/device/in7_input').read())
 	bat = sum(a) / average
@@ -58,8 +61,7 @@ while True:
 		charging = 0
 	if b < 1000 and a[0] > 3800:
 		charging = 1
-	#not charging math
-	#needs to know how to detect charger attached
+#math when not charging
 	if charging == 0:
 		if bat < 3600: #change to 0 during troubleshooting
 			changeicon("0")
@@ -112,6 +114,7 @@ while True:
 			if status != 10:
 				changeicon("10")      
 			status = 10
+#math when charging
 	if charging == 1:
 		if bat < 4023:
 			if status != 11:
