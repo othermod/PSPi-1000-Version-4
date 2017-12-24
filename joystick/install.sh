@@ -24,7 +24,7 @@ python /boot/joystick/joystick.py &
 sleep 2
 echo "calibrating joystick"
 jscal -c /dev/input/js0
-echo "sleep 5" > /home/pi/joystick.sh
+echo "sleep 1" > /home/pi/joystick.sh
 jscal -p /dev/input/js0 >> /home/pi/joystick.sh
 grep joystick.sh /etc/rc.local >/dev/null
 if [ $? -eq 0 ]; then
