@@ -85,11 +85,28 @@ echo "SUBSYSTEM==\"input\", ATTRS{name}==\"retrogame\", ENV{ID_INPUT_KEYBOARD}=\
 	# Start on boot
 grep retrogame /etc/rc.local >/dev/null
 if [ $? -eq 0 ]; then
-	echo "retrogame already exists in rc.local. Re-creating."
+	echo "Retrogame already exists in rc.local. Re-creating."
 	# retrogame already in rc.local, but make sure correct:
 	sed -i "s/^.*retrogame.*$/\/usr\/local\/bin\/retrogame \&/g" /etc/rc.local >/dev/null
 else
-	echo "retrogame doesn't exist in rc.local. Creating."
+	echo "Retrogame doesn't exist in rc.local. Creating."
 	# Insert retrogame into rc.local before final 'exit 0'
 	sed -i "s/^exit 0/\/usr\/local\/bin\/retrogame \&\\nexit 0/g" /etc/rc.local >/dev/null
 fi
+
+grep input_player /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_a =.*$/\input_player1_a = "'"enter"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_b =.*$/\input_player1_b = "'"escape"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_y =.*$/\input_player1_y = "'"y"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_x =.*$/\input_player1_x = "'"x"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_start =.*$/\input_player1_start = "'"s"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_select =.*$/\input_player1_select = "'"d"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_l =.*$/\input_player1_l = "'"alt"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_r =.*$/\input_player1_r = "'"ralt"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_left =.*$/\input_player1_left = "'"left"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_right =.*$/\input_player1_right = "'"right"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_up =.*$/\input_player1_up = "'"up"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_down =.*$/\input_player1_down = "'"down"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_l2 =.*$/\input_player1_l2 = "'"kp_minus"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+sed -i "s/^.*input_player1_r2 =.*$/\input_player1_r2 = "'"kp_plus"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
+
