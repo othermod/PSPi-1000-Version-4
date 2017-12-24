@@ -28,15 +28,15 @@ After Emulation Station loads, press F4 on the keyboard to exit to the command l
 
 *Type the following commands:*
 
-sudo bash /boot/buttons/install.sh
+sudo /boot/buttons/install.sh
 
-sudo bash /boot/shutdown/install.sh
+sudo /boot/shutdown/install.sh
 
-sudo bash /boot/battery/install.sh
+sudo /boot/battery/install.sh
 
-sudo bash /boot/backlight/install.sh
+sudo /boot/backlight/install.sh
 
-sudo bash /boot/joystick/install.sh
+sudo /boot/joystick/install.sh
 
 cd /boot/uinput
 
