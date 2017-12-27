@@ -7,16 +7,16 @@ if [ $(id -u) -ne 0 ]; then
 fi
 
 
-echo "Configuring battery to start at boot..."
+echo "Configuring backlight to start at boot..."
 
 grep backlight /etc/rc.local >/dev/null
 if [ $? -eq 0 ]; then
 	echo "backlight already exists in rc.local. Re-creating."
-	# battery already in rc.local, but make sure correct:
-	sed -i "s/^.*backlight.*$/python \/boot\/backlight\/battery.py \&/g" /etc/rc.local >/dev/null
+	# backlight already in rc.local, but make sure correct:
+	sed -i "s/^.*backlight.*$/python \/boot\/backlight\/backlight.py \&/g" /etc/rc.local >/dev/null
 else
-	echo "battery doesn't exist in rc.local. Creating."
-	# Insert battery into rc.local before final 'exit 0'
-	sed -i "s/^exit 0/python \/boot\/battery\/battery.py \&\\nexit 0/g" /etc/rc.local >/dev/null
+	echo "backlight doesn't exist in rc.local. Creating."
+	# Insert backlight into rc.local before final 'exit 0'
+	sed -i "s/^exit 0/python \/boot\/backlight\/backlight.py \&\\nexit 0/g" /etc/rc.local >/dev/null
 fi
 
