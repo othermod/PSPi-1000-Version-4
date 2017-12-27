@@ -24,8 +24,8 @@ dtoverlay=pwm,pin=18,func=2
 #Reduce PWM Audio Noise
 disable_audio_dither=1
 
-#Test this
-#audio_pwm_mode=2
+#Reduce PWM noise substantially
+audio_pwm_mode=2
 
 #Pull GPIO high to keep power circuits on. This is also connected to the LCD backlight initially.
 dtoverlay=gpio-poweroff,gpiopin=27,active_low="y"
