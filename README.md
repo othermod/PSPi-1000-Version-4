@@ -42,4 +42,12 @@ cd /boot/uinput
 
 sudo python setup.py install
 
+type sudo raspi-config
+
+Select Interfacing Options
+
+Select I2C
+
+Select Yes and press enter
+
 sudo reboot
