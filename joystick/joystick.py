@@ -14,7 +14,7 @@ buttons = {
         }
 
 # Hardware settings
-DZONE = 500 # dead zone applied to joystick (mV)
+DZONE = 250 # dead zone applied to joystick (mV)
 VREF = 3300 # joystick Vcc (mV)
 
 state = {x : 0 for x in buttons} # button internal state
@@ -54,12 +54,23 @@ def setState(state, button, key):
 while True:
 	#Gets the ADC values for channels 0 and 1 from the OS,
 	an0 = int(open('/sys/class/hwmon/hwmon0/device/in4_input').read())
+	if an0 < .35 * VREF:
+		an0 = 0
+	if an0 > .65 * VREF:
+		an0 = VREF
 	an1 = int(open('/sys/class/hwmon/hwmon0/device/in5_input').read())
+	if an1 < .35 * VREF:
+		an1 = 0
+	if an1 > .65 * VREF:
+		an1 = VREF
     #Check button states. Can be removed after Retropie Configuration.
 	for button in buttons:
         	key = buttons[button]
         	state[button] = setState(state[button],button,key)
-    #Check and apply joystick states
+    #Check and apply joystick states. Can to absolute value of joystick minus vref instead of the
+
+
+ 
 	if (an0 > (VREF/2 + DZONE)) or (an0 < (VREF/2 - DZONE)):
 		device.emit(uinput.ABS_X, an0)
 	else:
