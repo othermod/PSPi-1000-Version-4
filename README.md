@@ -42,6 +42,8 @@ cd /boot/uinput
 
 sudo python setup.py install
 
+**Only do this if the buttons aren't working. It's been integrated into the button installation script, so it shouldn't be needed.**
+
 type sudo raspi-config
 
 Select Interfacing Options
@@ -49,5 +51,7 @@ Select Interfacing Options
 Select I2C
 
 Select Yes and press enter
+
+**Last step to start the code**
 
 sudo reboot
