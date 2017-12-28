@@ -9,8 +9,8 @@ dtparam=i2c_vc=on
 dtparam=audio=on
 
 #power reduction
-dtoverlay=pi3-disable-bt
-dtoverlay=pi3-disable-wifi
+#dtoverlay=pi3-disable-bt
+#dtoverlay=pi3-disable-wifi
 
 #Normal PWM stereo audio pins
 #dtoverlay=pwm-2chan,pin=18,func=2,pin2=19,func2=4
