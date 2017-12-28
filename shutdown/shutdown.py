@@ -10,10 +10,10 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 def Shutdown(channel):
-	#Dim backlight before shutdown
-	#Pulls BL pin low, allowing backlight to kill as soon as shutdown completes
+	# Dim backlight before shutdown
+	# Pulls BL pin low, allowing backlight to kill as soon as shutdown completes
 	GPIO.setup(19, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-	#Issue shutddown command
+	# Issue shutddown command
 	os.system("sudo shutdown -h now")
 
 # Interrupt looking for pin voltage to drop
