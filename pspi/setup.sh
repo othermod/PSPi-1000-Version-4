@@ -141,4 +141,4 @@ fi
 cd /boot/uinput/
 python setup.py install
 read -rsp $'Press any key to reboot...\n' -n1 key
-sudo reboot
+reboot
