@@ -6,7 +6,6 @@ if [ $(id -u) -ne 0 ]; then
 	exit 1
 fi
 
-
 echo "Configuring pspi to start at boot..."
 
 grep pspi /etc/rc.local >/dev/null
@@ -121,7 +120,8 @@ else
   echo 'File raspi-blacklist.conf does not exist, skip this step.'
 fi
 
-
+cd /boot/uinput/
+python setup.py install
 
 
 #grep input_player /opt/retropie/configs/all/retroarch.cfg >/dev/null
