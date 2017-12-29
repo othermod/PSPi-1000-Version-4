@@ -9,7 +9,7 @@ import signal
 import subprocess
 from subprocess import check_output
 
-status = 10
+status = 10.5
 charging = 0
 #Set debug to 1 to display status
 debug = 0
@@ -21,8 +21,8 @@ average = 10
 #refresh rate in seconds
 refresh = 6
 
-PNGVIEWPATH = "/boot/battery/pngview"
-ICONPATH = "/boot/battery/icons"
+PNGVIEWPATH = "/boot//pspi/battery"
+ICONPATH = "/boot/pspi/battery"
 	
 def changeicon(number):
     i = 0
