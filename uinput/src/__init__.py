@@ -164,7 +164,7 @@ class Device(object):
     `version` - version identifier
     """
 
-    def __init__(self, events, name="python-uinput",
+    def __init__(self, events, name="pspi",
                  bustype=0, vendor=0, product=0, version=0, fd=None):
         self.__events = events
         self.__uinput_fd = -1

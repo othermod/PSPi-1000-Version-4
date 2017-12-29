@@ -35,7 +35,7 @@ except:
     # library.
     pass
 
-setup(name='python-uinput',
+setup(name='pspi',
       version='0.11.2',
       description='Pythonic API to Linux uinput kernel module.',
       author='Tuomas Räsänen',
