@@ -120,9 +120,6 @@ else
   echo 'File raspi-blacklist.conf does not exist, skip this step.'
 fi
 
-cd /boot/uinput/
-python setup.py install
-
 
 #grep input_player /opt/retropie/configs/all/retroarch.cfg >/dev/null
 #sed -i "s/^.*input_player1_a =.*$/\input_player1_a = "'"enter"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
@@ -140,3 +137,8 @@ python setup.py install
 #sed -i "s/^.*input_player1_l2 =.*$/\input_player1_l2 = "'"kp_minus"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
 #sed -i "s/^.*input_player1_r2 =.*$/\input_player1_r2 = "'"kp_plus"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
 
+
+cd /boot/uinput/
+python setup.py install
+read -rsp $'Press any key to reboot...\n' -n1 key
+sudo reboot
