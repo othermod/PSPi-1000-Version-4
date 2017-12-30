@@ -39,7 +39,3 @@ Select Interfacing Options
 Select I2C
 
 Select Yes and press enter
-
-**Last step to start the code**
-
-sudo reboot
