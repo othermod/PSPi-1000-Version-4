@@ -21,7 +21,7 @@ average = 10
 #refresh rate in seconds
 refresh = 6
 
-PNGVIEWPATH = "/boot//pspi/battery"
+PNGVIEWPATH = "/boot/pspi/battery"
 ICONPATH = "/boot/pspi/battery"
 	
 def changeicon(number):
