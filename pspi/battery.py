@@ -27,7 +27,7 @@ ICONPATH = "/boot/pspi/battery"
 def changeicon(number):
     i = 0
     killid = 0
-    os.system(PNGVIEWPATH + "/pngview -b 0 -l 3000" + number + " -x 460 -y 5 " + ICONPATH + "/battery" + number + ".png &")
+    os.system(PNGVIEWPATH + "/pngview -b 0 -l 3000" + number + " -x 450 -y 5 " + ICONPATH + "/battery" + number + ".png &")
     if debug == 1:
         print("Changed battery icon to " + number)
     out = check_output("ps aux | grep pngview | awk '{ print $2 }'", shell=True)
@@ -52,7 +52,7 @@ def checkstatus():
 	b = int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())
 #	return b
 # The loop polls GPIO and joystick state every 5s
-os.system(PNGVIEWPATH + "/pngview -b 0 -l 299999 -x 460 -y 5 " + ICONPATH + "/blank.png &")
+os.system(PNGVIEWPATH + "/pngview -b 0 -l 299999 -x 450 -y 5 " + ICONPATH + "/blank.png &")
 a = [int(open('/sys/class/hwmon/hwmon0/device/in7_input').read())] * average
 #b = int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())
 while True:
