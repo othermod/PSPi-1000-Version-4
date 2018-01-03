@@ -19,7 +19,7 @@ debug = 0
 average = 10
 
 #refresh rate in seconds
-refresh = 6
+refresh = 1
 
 PNGVIEWPATH = "/boot/pspi/battery"
 ICONPATH = "/boot/pspi/battery"
