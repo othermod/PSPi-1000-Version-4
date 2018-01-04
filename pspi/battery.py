@@ -140,7 +140,7 @@ while True:
 			if status < 12:
 				changeicon("12")
 				status = 12
-		elif bat < 4150:
+		elif bat < 4160:
 			if status < 13:
 				changeicon("13")
 				status = 13
