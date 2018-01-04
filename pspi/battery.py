@@ -9,8 +9,10 @@ import signal
 import subprocess
 from subprocess import check_output
 
+#initial battery and charging status
 status = 10.5
 charging = 0
+
 #Set debug to 1 to display status
 debug = 0
 
@@ -46,17 +48,18 @@ def endProcess(signalnum = None, handler = None):
 def checkvoltage():
 	global a
 	a = [int(open('/sys/class/hwmon/hwmon0/device/in7_input').read())] + a[:-1]
-#	return a
+
 def checkstatus():
 	global b
 	b = int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())
-#	return b
-# The loop polls GPIO and joystick state every 5s
+
 os.system(PNGVIEWPATH + "/pngview -b 0 -l 299999 -x 450 -y 5 " + ICONPATH + "/blank.png &")
+
+#initial setup of the list that averages battery voltage
 a = [int(open('/sys/class/hwmon/hwmon0/device/in7_input').read())] * average
-#b = int(open('/sys/class/hwmon/hwmon0/device/in6_input').read())
+
 while True:
-    	# check battery states
+    
 	checkvoltage()
 	checkstatus()
 	bat = sum(a) / average
@@ -72,19 +75,17 @@ while True:
 			a = [a[0]] * average
 		charging = 1
 	#not charging math
-	#needs to know how to detect charger attached
-	#emergency poweroff occurs at 3.5v
+	#emergency poweroff occurs at 3.5v, needs to issue proper shutdown prior to this
 	if charging == 0:
 		if bat < 3600: #change to 0 during troubleshooting
-			if status != 0:
+			if status > 0:
 				changeicon("0")
-			status = 0
-			#needs to issue a shutdown
+				status = 0
+				#it should issue a shutdown at this point. maybe delay and show a 30-second warning before issuing it
 		
-    		elif bat < 3638: #change to 0 during troubleshooting
+    		elif bat < 3638:
         		if status > 1:
 				changeicon("1")
-			#might change this icon to the exclamation point
 				status = 1
 		
     		elif bat < 3678:
