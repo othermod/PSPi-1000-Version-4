@@ -41,7 +41,10 @@ dtoverlay=i2c0-bcm2708,pins_28_29
 dtparam=act_led_gpio=10
 
 #Enable ADC
-dtoverlay=ads1015m
+dtoverlay=adc
+
+#Set backlight to 100%
+dtoverlay=backlight
  
 #Set screen size and any overscan required
 overscan_left=0
@@ -51,12 +54,12 @@ overscan_bottom=0
 framebuffer_width=480
 framebuffer_height=272
  
-enable DPI
+#Enable DPI
 enable_dpi_lcd=1
 display_default_lcd=1
 dpi_group=2
 dpi_mode=87
-dtoverlay=othermod16
+dtoverlay=lcd
 dpi_output_format=458774		
 hdmi_timings=480 0 5 0 40 272 0 8 0 8 0 0 0 60 0 9600000 3		
 start_x=1
