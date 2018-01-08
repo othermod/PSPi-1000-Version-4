@@ -2,7 +2,7 @@
 #https://www.othermod.com
 
 #need to remove imports that are no longer used
-import uinput, time, math
+import uinput, math, time
 import array
 import os
 import signal
@@ -13,15 +13,17 @@ from subprocess import check_output
 status = 10.5
 charging = 0
 
-#Set debug to 1 to display status
+#set debug to 1 to display status
 debug = 0
 
+#set logging to 1 to log voltage
+logging = 0
 
 #number of battery readings to average together
 average = 10
 
 #refresh rate in seconds
-refresh = 1
+refresh = 6
 
 PNGVIEWPATH = "/boot/pspi/battery"
 ICONPATH = "/boot/pspi/battery"
@@ -59,7 +61,6 @@ os.system(PNGVIEWPATH + "/pngview -b 0 -l 299999 -x 450 -y 5 " + ICONPATH + "/bl
 a = [int(open('/sys/class/hwmon/hwmon0/device/in7_input').read())] * average
 
 while True:
-    
 	checkvoltage()
 	checkstatus()
 	bat = sum(a) / average
@@ -149,5 +150,8 @@ while True:
 			if status < 14:
 				changeicon("14")
 				status = 14
-    	time.sleep(refresh)
+	if logging == 1:
+		with open('/boot/pspi/battery.log', 'a') as log:
+			log.write('\n' + str(bat))
+	time.sleep(refresh)
 
