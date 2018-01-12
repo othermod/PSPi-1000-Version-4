@@ -145,5 +145,10 @@ cp /boot/pspi/cmdline.txt /boot/cmdline.txt
 
 cd /boot/wiringPi
 ./build
+
+cd /boot/pigpio
+make
+make install
+
 read -rsp $'Press any key to reboot...\n' -n1 key
 reboot

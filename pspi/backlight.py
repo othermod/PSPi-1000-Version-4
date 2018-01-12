@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO 
 import time 
 import os  
-duty = 350
+duty = 175
 
 GPIO.setmode(GPIO.BCM)
 #GPIO.setup(19, GPIO.IN, pull_up_down = GPIO.PUD_UP)
@@ -13,22 +13,27 @@ GPIO.setup(26, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 #pwm = GPIO.PWM(19, 100)
 #pwm.start(100)
 
-time.sleep(5)
-os.system("gpio -g mode 19 pwm")
-os.system("gpio -g pwm 19 350")
-
+#os.system("gpio -g mode 19 pwm")
+#os.system("gpio -g pwm 19 350")
+#os.system("sudo pigpiod")
+time.sleep(1)
+os.system("sudo pigs p 19 100")
+os.system("sudo killall pigpiod")
+#os.system("sudo killall pigpiod")
 def BL(channel):
 	global duty
-	duty = duty - 75
-	if duty < 200:
-		duty = 500
-	os.system("gpio -g pwm 19 %s" % (duty-1))
+	duty = duty - 25
+	if duty < 50:
+		duty = 175
+	os.system("sudo pigpiod")
+	os.system("sudo pigs p 19 %s" % duty)
+	os.system("audo killall pigpiod")
 #	global duty
 #	duty = duty - 10
 #	if duty == 10:
 #		duty = 50
 #	pwm.ChangeDutyCycle(duty)
-#	print duty
+	print duty
 
 GPIO.add_event_detect(26, GPIO.FALLING, callback = BL, bouncetime = 1000)
 
