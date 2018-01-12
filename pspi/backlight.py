@@ -17,17 +17,17 @@ GPIO.setup(26, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 #os.system("gpio -g pwm 19 350")
 #os.system("sudo pigpiod")
 time.sleep(1)
+os.system("sudo pigpiod")
 os.system("sudo pigs p 19 100")
-os.system("sudo killall pigpiod")
 #os.system("sudo killall pigpiod")
 def BL(channel):
 	global duty
 	duty = duty - 25
 	if duty < 50:
 		duty = 175
-	os.system("sudo pigpiod")
+#	os.system("sudo pigpiod")
 	os.system("sudo pigs p 19 %s" % duty)
-	os.system("audo killall pigpiod")
+#	os.system("sudo killall pigpiod")
 #	global duty
 #	duty = duty - 10
 #	if duty == 10:
