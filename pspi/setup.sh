@@ -143,5 +143,7 @@ python setup.py install
 
 cp /boot/pspi/cmdline.txt /boot/cmdline.txt
 
+cd /boot/wiringPi
+./build
 read -rsp $'Press any key to reboot...\n' -n1 key
 reboot
