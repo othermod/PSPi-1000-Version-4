@@ -143,8 +143,9 @@ python setup.py install
 
 cp /boot/pspi/cmdline.txt /boot/cmdline.txt
 
-cd /boot/wiringPi
-./build
+#wiringPi install - currently disabled
+#cd /boot/wiringPi
+#./build
 
 cd /boot/pigpio
 make
