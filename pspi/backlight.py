@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO 
 import time 
 import os  
-duty = 175
+duty = 125
 
 GPIO.setmode(GPIO.BCM)
 #GPIO.setup(19, GPIO.IN, pull_up_down = GPIO.PUD_UP)
@@ -15,16 +15,16 @@ GPIO.setup(26, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 #os.system("gpio -g mode 19 pwm")
 #os.system("gpio -g pwm 19 350")
-#os.system("sudo pigpiod")
-time.sleep(1)
 os.system("sudo pigpiod")
+time.sleep(1)
 os.system("sudo pigs p 19 100")
+#os.system("sudo killall pigpiod")
 #os.system("sudo killall pigpiod")
 def BL(channel):
 	global duty
 	duty = duty - 25
 	if duty < 50:
-		duty = 175
+		duty = 125
 #	os.system("sudo pigpiod")
 	os.system("sudo pigs p 19 %s" % duty)
 #	os.system("sudo killall pigpiod")
