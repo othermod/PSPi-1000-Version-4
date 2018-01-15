@@ -120,28 +120,14 @@ else
   echo 'File raspi-blacklist.conf does not exist, skip this step.'
 fi
 
-
-#grep input_player /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_a =.*$/\input_player1_a = "'"enter"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_b =.*$/\input_player1_b = "'"escape"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_y =.*$/\input_player1_y = "'"y"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_x =.*$/\input_player1_x = "'"x"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_start =.*$/\input_player1_start = "'"s"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_select =.*$/\input_player1_select = "'"d"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_l =.*$/\input_player1_l = "'"alt"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_r =.*$/\input_player1_r = "'"ralt"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_left =.*$/\input_player1_left = "'"left"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_right =.*$/\input_player1_right = "'"right"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_up =.*$/\input_player1_up = "'"up"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_down =.*$/\input_player1_down = "'"down"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_l2 =.*$/\input_player1_l2 = "'"kp_minus"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-#sed -i "s/^.*input_player1_r2 =.*$/\input_player1_r2 = "'"kp_plus"'"/g" /opt/retropie/configs/all/retroarch.cfg >/dev/null
-
+cp /boot/pspi/es_input.cfg /opt/retropie/configs/all/emulationstation/es_input.cfg
+cp /boot/pspi/retroarch.cfg /opt/retropie/configs/all/retroarch.cfg
 
 cd /boot/uinput/
 python setup.py install
 
 cp /boot/pspi/cmdline.txt /boot/cmdline.txt
+
 
 #wiringPi install - currently disabled
 #cd /boot/wiringPi
@@ -150,6 +136,9 @@ cp /boot/pspi/cmdline.txt /boot/cmdline.txt
 cd /boot/pigpio
 make
 make install
+
+#remove DHCP wait
+rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
 
 read -rsp $'Press any key to reboot...\n' -n1 key
 reboot
