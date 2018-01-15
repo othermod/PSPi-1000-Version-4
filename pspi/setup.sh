@@ -122,6 +122,7 @@ fi
 
 cp /boot/pspi/es_input.cfg /opt/retropie/configs/all/emulationstation/es_input.cfg
 cp /boot/pspi/retroarch.cfg /opt/retropie/configs/all/retroarch.cfg
+cp /boot/pspi/pspi.cfg /opt/retropie/configs/all/retroarch-joypads/pspi.cfg
 
 cd /boot/uinput/
 python setup.py install
