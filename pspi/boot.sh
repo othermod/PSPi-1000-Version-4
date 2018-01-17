@@ -8,7 +8,6 @@ fi
 
 python /boot/pspi/battery.py &
 python /boot/pspi/joystick.py &
-python /boot/pspi/shutdown.py &
 /usr/local/bin/retrogame &
 /usr/bin/tvservice -o
 python /boot/pspi/backlight.py &
