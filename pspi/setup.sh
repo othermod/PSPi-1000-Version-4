@@ -22,7 +22,7 @@ fi
 echo "Copying config file /boot/retrogame.cfg."
 if [ -e /boot/retrogame.cfg ]; then
 	echo "File already exists."
-	echo "Overwriting will reset buttons to default.."	
+	echo "Overwriting will reset buttons to default.."
 	echo "Overwrite file? [y/n] "
 	read
 	if [[ ! "$REPLY" =~ ^(yes|y|Y)$ ]]; then
@@ -36,8 +36,8 @@ if [ -e /boot/retrogame.cfg ]; then
 			echo "File doesn't exist."
 			echo "Copy retrogame.cfg to /boot/buttons/ and try again."
 			echo "Failed."
-			exit 1	
-		fi	
+			exit 1
+		fi
 	fi
 else
 	if [ -e /boot/pspi/buttons/retrogame.cfg ]; then
@@ -48,10 +48,9 @@ else
 		echo "File doesn't exist."
 		echo "Copy retrogame.cfg to /boot/buttons/ and try again."
 		echo "Failed."
-		exit 1	
+		exit 1
 	fi
-	
-	
+
 fi
 echo "Copying retrogame to /usr/local/bin/retrogame"
 if [ -e /usr/local/bin/retrogame ]; then
@@ -59,17 +58,17 @@ if [ -e /usr/local/bin/retrogame ]; then
 	echo "Overwrite file? [y/n] "
 	read
 	if [[ ! "$REPLY" =~ ^(yes|y|Y)$ ]]; then
-		echo "Not verwritten."
+		echo "Not overwritten."
 	else
 		if [ -e /boot/pspi/buttons/retrogame ]; then
 			echo "File exists. Continuing."
-			cp /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
+			cp -f /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
 			echo "Overwritten."
 		else
 			echo "File doesn't exist."
 			echo "Copy retrogame to /boot/buttons and try again."
 			echo "Failed."
-			exit 1	
+			exit 1
 		fi
 	fi
 else
@@ -81,7 +80,7 @@ else
 		echo "File doesn't exist."
 		echo "Copy retrogame to /boot/buttons/ and try again."
 		echo "Failed."
-		exit 1	
+		exit 1
 	fi
 fi
 
