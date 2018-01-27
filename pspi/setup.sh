@@ -63,7 +63,7 @@ if [ -e /usr/local/bin/retrogame ]; then
 	else
 		if [ -e /boot/pspi/buttons/retrogame ]; then
 			echo "File exists. Continuing."
-			cp /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
+			cp -f /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
 			echo "Overwritten."
 		else
 			echo "File doesn't exist."
@@ -75,7 +75,7 @@ if [ -e /usr/local/bin/retrogame ]; then
 else
 	if [ -e /boot/pspi/buttons/retrogame ]; then
 		echo "File exists. Continuing."
-		cp /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
+		cp -f /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
 		echo "Copied."
 	else
 		echo "File doesn't exist."
