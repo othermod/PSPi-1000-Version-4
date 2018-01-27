@@ -30,7 +30,7 @@ if [ -e /boot/retrogame.cfg ]; then
 	else
 		if [ -e /boot/pspi/buttons/retrogame.cfg ]; then
 			echo "File exists. Continuing."
-			cp -f /boot/pspi/buttons/retrogame.cfg /boot/retrogame.cfg
+			cp /boot/pspi/buttons/retrogame.cfg /boot/retrogame.cfg
 			echo "Overwritten."
 		else
 			echo "File doesn't exist."
@@ -42,7 +42,7 @@ if [ -e /boot/retrogame.cfg ]; then
 else
 	if [ -e /boot/pspi/buttons/retrogame.cfg ]; then
 		echo "File exists. Continuing."
-		cp -f /boot/pspi/buttons/retrogame.cfg /boot/retrogame.cfg
+		cp /boot/pspi/buttons/retrogame.cfg /boot/retrogame.cfg
 		echo "Copied."
 	else
 		echo "File doesn't exist."
@@ -59,11 +59,11 @@ if [ -e /usr/local/bin/retrogame ]; then
 	echo "Overwrite file? [y/n] "
 	read
 	if [[ ! "$REPLY" =~ ^(yes|y|Y)$ ]]; then
-		echo "Not overwritten."
+		echo "Not verwritten."
 	else
 		if [ -e /boot/pspi/buttons/retrogame ]; then
 			echo "File exists. Continuing."
-			cp -f /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
+			cp /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
 			echo "Overwritten."
 		else
 			echo "File doesn't exist."
@@ -75,7 +75,7 @@ if [ -e /usr/local/bin/retrogame ]; then
 else
 	if [ -e /boot/pspi/buttons/retrogame ]; then
 		echo "File exists. Continuing."
-		cp -f /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
+		cp /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
 		echo "Copied."
 	else
 		echo "File doesn't exist."
@@ -120,14 +120,14 @@ else
   echo 'File raspi-blacklist.conf does not exist, skip this step.'
 fi
 
-cp -f /boot/pspi/es_input.cfg /opt/retropie/configs/all/emulationstation/es_input.cfg
-cp -f /boot/pspi/retroarch.cfg /opt/retropie/configs/all/retroarch.cfg
-cp -f /boot/pspi/pspi.cfg /opt/retropie/configs/all/retroarch-joypads/pspi.cfg
+cp /boot/pspi/es_input.cfg /opt/retropie/configs/all/emulationstation/es_input.cfg
+cp /boot/pspi/retroarch.cfg /opt/retropie/configs/all/retroarch.cfg
+cp /boot/pspi/pspi.cfg /opt/retropie/configs/all/retroarch-joypads/pspi.cfg
 
 cd /boot/uinput/
 python setup.py install
 
-cp -f /boot/pspi/cmdline.txt /boot/cmdline.txt
+cp /boot/pspi/cmdline.txt /boot/cmdline.txt
 
 
 #wiringPi install - currently disabled
