@@ -22,7 +22,7 @@ fi
 echo "Copying config file /boot/retrogame.cfg."
 if [ -e /boot/retrogame.cfg ]; then
 	echo "File already exists."
-	echo "Overwriting will reset buttons to default.."
+	echo "Overwriting will reset buttons to default.."	
 	echo "Overwrite file? [y/n] "
 	read
 	if [[ ! "$REPLY" =~ ^(yes|y|Y)$ ]]; then
@@ -30,27 +30,28 @@ if [ -e /boot/retrogame.cfg ]; then
 	else
 		if [ -e /boot/pspi/buttons/retrogame.cfg ]; then
 			echo "File exists. Continuing."
-			cp /boot/pspi/buttons/retrogame.cfg /boot/retrogame.cfg
+			cp -f /boot/pspi/buttons/retrogame.cfg /boot/retrogame.cfg
 			echo "Overwritten."
 		else
 			echo "File doesn't exist."
 			echo "Copy retrogame.cfg to /boot/buttons/ and try again."
 			echo "Failed."
-			exit 1
-		fi
+			exit 1	
+		fi	
 	fi
 else
 	if [ -e /boot/pspi/buttons/retrogame.cfg ]; then
 		echo "File exists. Continuing."
-		cp /boot/pspi/buttons/retrogame.cfg /boot/retrogame.cfg
+		cp -f /boot/pspi/buttons/retrogame.cfg /boot/retrogame.cfg
 		echo "Copied."
 	else
 		echo "File doesn't exist."
 		echo "Copy retrogame.cfg to /boot/buttons/ and try again."
 		echo "Failed."
-		exit 1
+		exit 1	
 	fi
-
+	
+	
 fi
 echo "Copying retrogame to /usr/local/bin/retrogame"
 if [ -e /usr/local/bin/retrogame ]; then
@@ -68,19 +69,19 @@ if [ -e /usr/local/bin/retrogame ]; then
 			echo "File doesn't exist."
 			echo "Copy retrogame to /boot/buttons and try again."
 			echo "Failed."
-			exit 1
+			exit 1	
 		fi
 	fi
 else
 	if [ -e /boot/pspi/buttons/retrogame ]; then
 		echo "File exists. Continuing."
-		cp /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
+		cp -f /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
 		echo "Copied."
 	else
 		echo "File doesn't exist."
 		echo "Copy retrogame to /boot/buttons/ and try again."
 		echo "Failed."
-		exit 1
+		exit 1	
 	fi
 fi
 
@@ -119,14 +120,14 @@ else
   echo 'File raspi-blacklist.conf does not exist, skip this step.'
 fi
 
-cp /boot/pspi/es_input.cfg /opt/retropie/configs/all/emulationstation/es_input.cfg
-cp /boot/pspi/retroarch.cfg /opt/retropie/configs/all/retroarch.cfg
-cp /boot/pspi/pspi.cfg /opt/retropie/configs/all/retroarch-joypads/pspi.cfg
+cp -f /boot/pspi/es_input.cfg /opt/retropie/configs/all/emulationstation/es_input.cfg
+cp -f /boot/pspi/retroarch.cfg /opt/retropie/configs/all/retroarch.cfg
+cp -f /boot/pspi/pspi.cfg /opt/retropie/configs/all/retroarch-joypads/pspi.cfg
 
 cd /boot/uinput/
 python setup.py install
 
-cp /boot/pspi/cmdline.txt /boot/cmdline.txt
+cp -f /boot/pspi/cmdline.txt /boot/cmdline.txt
 
 
 #wiringPi install - currently disabled
