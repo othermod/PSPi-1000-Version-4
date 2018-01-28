@@ -1124,15 +1124,23 @@ int main(int argc, char *argv[]) {
 	    for(a=i=0; a<5; a++) {
 	      for(b=1; b; b <<= 1, i++) { // i=0 to 159
 	        if((key[i] > KEY_RESERVED) && (key[i] < GND)) {
-	          // PSPI - Intercept Home button press and release and
-	          //        change it's GPIO39 event to trigger GPIO40
-	          //        instead
-	          if(((intstate[a] & 448) == 192) && (i == 39) &&
-	              (key[40] > KEY_RESERVED) && (key[40] < GND)) {
-	            intstate[a] |= 384;
-	            b <<= 1;
-	            i++;
+	          /***********************************************************/
+	          // PSPI - Intercept Home button press and change it from
+	          //        Start and Select to Start and Mute
+	          /***********************************************************/
+	          // Check that we are in I2C address 0x20 (a = 1),
+	          // that Start, GPIO38, and Select, GPIO39 are pressed, but
+	          //   not Mute, GPIO40 (intstate = xxxx xxx0 11xx xxxx = 192),
+	          // that we are on the Select event (i = 39),
+	          // and that Mute, GPIO40, is an active key in retrogame.cfg
+	          if((a == 1) && ((intstate[a] & 448) == 192) && (i == 39) &&
+	              (key[i + 1] > KEY_RESERVED) && (key[i + 1] < GND)) {
+	            intstate[a] &= ~b; // Remove GPIO39 press
+	            b <<= 1; // Shift to next GPIO pin
+	            intstate[a] |= b; // Add GPIO40 press
+	            i++; // Skip GPIO39 press event since we removed it
 	          }
+	          /***********************************************************/
 	          // Compare internal state against previously-issued value.
 	          // Send keys only for changed states.
 	          if((intstate[a] & b) != (extstate[a] & b)) {
