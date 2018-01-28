@@ -1124,6 +1124,15 @@ int main(int argc, char *argv[]) {
 	    for(a=i=0; a<5; a++) {
 	      for(b=1; b; b <<= 1, i++) { // i=0 to 159
 	        if((key[i] > KEY_RESERVED) && (key[i] < GND)) {
+	          // PSPI - Intercept Home button press and release and
+	          //        change it's GPIO39 event to trigger GPIO40
+	          //        instead
+	          if(((intstate[a] & 448) == 192) && (i == 39) &&
+	              (key[40] > KEY_RESERVED) && (key[40] < GND)) {
+	            intstate[a] |= 384;
+	            b <<= 1;
+	            i++;
+	          }
 	          // Compare internal state against previously-issued value.
 	          // Send keys only for changed states.
 	          if((intstate[a] & b) != (extstate[a] & b)) {
@@ -1132,10 +1141,6 @@ int main(int argc, char *argv[]) {
 	            // it'd be doing about the same thing behind the scenes,
 	            // but might be more legible in source form.
 	            extstate[a] = (extstate[a] & ~b) | (intstate[a] & b);
-	            // PSPI - Intercept Home button press and release and
-	            //        change it's GPIO39 event to trigger GPIO40
-	            //        instead
-	            if(((lastKey == 38) || (lastKey == 40)) && (i == 39)) i = 40;
 	            keyEv.code = key[i];
 	            keyEv.value = ((intstate[a] & b) > 0);
 	            write(keyfd, &keyEv, sizeof(keyEv));
@@ -1151,11 +1156,7 @@ int main(int argc, char *argv[]) {
 	            } else { // Release?
 	              // Stop repeat and return to normal IRQ monitoring
 	              // (no timeout).
-	              timeout = -1;
-	              // PSPI - In order to ease the intercept of the Home
-	              //        button release, we need to keep GPIO40 as
-	              //        the last key value
-	              if((lastKey != 40) || (i != 38)) lastKey = -1;
+	              lastKey = timeout = -1;
 	              if(debug >= 3) {
 	                printf("%s: GPIO%02d key release code %d\n",
 	                  __progname, i, key[i]);
