@@ -24,8 +24,8 @@ PiGPIO is being used for DMA timed PWM. This works perfectly but it requires tha
 *Goal*
 
 There are 3 different types of PWM available on the Raspberry Pi:
-Software PWM
-Hardware PWM on PWM0 or PWM1
+Software PWM,
+Hardware PWM on PWM0 or PWM1, and
 DMA timed PWM
 
 Software PWM (normally using RPi.GPIO) is very unstable and uses precious CPU cycles on the Pi Zero.
