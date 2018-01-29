@@ -29,7 +29,7 @@ Hardware PWM on PWM0 or PWM1
 DMA timed PWM
 
 Software PWM (normally using RPi.GPIO) is very unstable and uses precious CPU cycles on the Pi Zero.
-Hardware PWM is ideal and was originally intended to be used for the backlight. The problem is that the PWM audio driver interferes with it. Even when using single-channel audio on PWM0 (GIIO18) with the mono overlay, PWM1 (GPIO19) is initialized when audio is played.
+Hardware PWM is ideal and was originally intended to be used for the backlight. The problem is that the PWM audio driver interferes with it. Even when using single-channel audio on PWM0 (GPIO18) with the mono overlay, PWM1 (GPIO19) is initialized when audio is played.
 
 That leaves DMA timed PWM. This is available in every GPIO pin and is accurate and efficient. PiGPIO (https://github.com/joan2937/pigpio), RPIO.GPIO (https://github.com/metachris/RPIO/blob/master/source/c_pwm/pwm.c), and servoblaster (https://github.com/richardghirst/PiBits/tree/master/ServoBlaster) all use it.
 I hope to avoid the PiGPIO daemon entirely and use a combination of available code to adjust the PWM signal more efficiently, and possibly also add this to retrogame.
