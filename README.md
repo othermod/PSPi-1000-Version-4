@@ -37,3 +37,7 @@ Select Interfacing Options
 Select I2C
 
 Select Yes and press enter
+
+**To-Do List**
+
+To see a list of areas where help is needed, check out https://github.com/othermod/PSPi-1000-Version-4/tree/master/experimental
