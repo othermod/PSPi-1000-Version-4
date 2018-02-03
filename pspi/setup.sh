@@ -141,5 +141,10 @@ make install
 #remove DHCP wait
 rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
 
+#add custom startup image
+cp /boot/pspi/pspi.png /home/pi/RetroPie/splashscreens/pspi.png
+cp /boot/pspi/splashscreen.list /etc/splashscreen.list
+
 read -rsp $'Press any key to reboot...\n' -n1 key
 reboot
+
