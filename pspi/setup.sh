@@ -134,9 +134,9 @@ cp /boot/pspi/cmdline.txt /boot/cmdline.txt
 #cd /boot/wiringPi
 #./build
 
-#cd /boot/pigpio
-#make
-#make install
+cd /boot/pigpio
+make
+make install
 
 #remove DHCP wait
 rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
