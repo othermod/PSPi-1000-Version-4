@@ -145,6 +145,10 @@ rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
 cp /boot/pspi/pspi.png /home/pi/RetroPie/splashscreens/pspi.png
 cp /boot/pspi/splashscreen.list /etc/splashscreen.list
 
+#modify theme
+cp -f /boot/pspi/carbon.xml /etc/emulationstation/themes/carbon/carbon.xml
+cp /boot/pspi/background.png /etc/emulationstation/themes/carbon/art/background.png
+
 read -rsp $'Press any key to reboot...\n' -n1 key
 reboot
 
