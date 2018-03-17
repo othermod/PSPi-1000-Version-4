@@ -8,6 +8,7 @@ fi
 
 echo "Configuring pspi to start at boot..."
 
+#boot script should have the necessary lines(battery, poweroff, backlight, buttons), then new ones should be added after a y/n question(joystick)
 grep pspi /etc/rc.local >/dev/null
 if [ $? -eq 0 ]; then
 	echo "pspi already exists in rc.local. Re-creating."
@@ -76,10 +77,12 @@ cp -f /boot/pspi/configs/pspi.png /home/pi/RetroPie/splashscreens/pspi.png
 cp -f /boot/pspi/configs/splashscreen.list /etc/splashscreen.list
 
 #modify theme
+#also, figure out how to change theme so the scrolling is instant instead of fade
 cp -f /boot/pspi/configs/carbon.xml /etc/emulationstation/themes/carbon/carbon.xml
 cp -f /boot/pspi/configs/background.png /etc/emulationstation/themes/carbon/art/background.png
 
 #add WiFi options to retropie menu
+#change this so it asks whether you have a Zero W, and doesn't copy the files if the answer is no
 cp -f '/boot/pspi/configs/othermod - WiFi Disable.sh' '/home/pi/RetroPie/retropiemenu/othermod - WiFi Disable.sh'
 cp -f '/boot/pspi/configs/othermod - WiFi Enable.sh' '/home/pi/RetroPie/retropiemenu/othermod - WiFi Enable.sh'
 cp -f '/boot/pspi/configs/othermod - WiFi Normal Speed.sh' '/home/pi/RetroPie/retropiemenu/othermod - WiFi Normal Speed.sh'
