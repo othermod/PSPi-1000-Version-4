@@ -67,26 +67,27 @@ cp -f /boot/pspi/configs/pspi.cfg /opt/retropie/configs/all/retroarch-joypads/ps
 cd /boot/uinput/
 python setup.py install
 
+#overwrite cmdline, for cleaner startup
 cp -f /boot/pspi/configs/cmdline.txt /boot/cmdline.txt
 
-#remove DHCP wait
+#remove DHCP wait, for faster bootup
 rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
 
 #add custom startup image
-cp -f /boot/pspi/configs/pspi.png /home/pi/RetroPie/splashscreens/pspi.png
-cp -f /boot/pspi/configs/splashscreen.list /etc/splashscreen.list
+cp -f /boot/pspi/theme/pspi.png /home/pi/RetroPie/splashscreens/pspi.png
+cp -f /boot/pspi/theme/splashscreen.list /etc/splashscreen.list
 
 #modify theme
 #also, figure out how to change theme so the scrolling is instant instead of fade
-cp -f /boot/pspi/configs/carbon.xml /etc/emulationstation/themes/carbon/carbon.xml
-cp -f /boot/pspi/configs/background.png /etc/emulationstation/themes/carbon/art/background.png
+#also, figure out how to set "power save mode" to Enhanced
+cp -f /boot/pspi/theme/carbon.xml /etc/emulationstation/themes/carbon/carbon.xml
+cp -f /boot/pspi/theme/background.png /etc/emulationstation/themes/carbon/art/background.png
 
-#add WiFi options to retropie menu
-#change this so it asks whether you have a Zero W, and doesn't copy the files if the answer is no
-cp -f '/boot/pspi/configs/othermod - WiFi Disable.sh' '/home/pi/RetroPie/retropiemenu/othermod - WiFi Disable.sh'
-cp -f '/boot/pspi/configs/othermod - WiFi Enable.sh' '/home/pi/RetroPie/retropiemenu/othermod - WiFi Enable.sh'
-cp -f '/boot/pspi/configs/othermod - WiFi Normal Speed.sh' '/home/pi/RetroPie/retropiemenu/othermod - WiFi Normal Speed.sh'
-cp -f '/boot/pspi/configs/othermod - WiFi Super Speed.sh' '/home/pi/RetroPie/retropiemenu/othermod - WiFi Super Speed.sh'
+#add WiFi options tand othermod menu
+#change this so it asks whether you have a Zero W (or better yet, detects whether it's a Zero W), and doesn't WiFi files if the answer is no
+cp -p -r -f  /boot/pspi/theme/scripts /home/pi/RetroPie/othermod
+cp -f /boot/pspi/theme/es_systems.cfg /etc/emulationstation/es_systems.cfg
+cp -p -r -f  /boot/pspi/theme/system /etc/emulationstation/themes/carbon/othermod
 
 read -rsp $'Press any key to reboot...\n' -n1 key
 reboot
