@@ -6,8 +6,8 @@ if [ $(id -u) -ne 0 ]; then
 	exit 1
 fi
 
-#python /boot/pspi/battery.py &
-#python /boot/pspi/joystick.py &
+python /boot/pspi/battery.py &
+python /boot/pspi/joystick.py &
 /usr/local/bin/retrogame &
 /usr/bin/tvservice -o
 python /boot/pspi/backlight.py &
