@@ -19,77 +19,16 @@ else
 	sed -i "s/^exit 0/bash \/boot\/pspi\/boot.sh\\nexit 0/g" /etc/rc.local >/dev/null
 fi
 
-echo "Copying config file /boot/retrogame.cfg."
-if [ -e /boot/retrogame.cfg ]; then
-	echo "File already exists."
-	echo "Overwriting will reset buttons to default.."	
-	echo "Overwrite file? [y/n] "
-	read
-	if [[ ! "$REPLY" =~ ^(yes|y|Y)$ ]]; then
-		echo "Not overwritten."
-	else
-		if [ -e /boot/pspi/buttons/retrogame.cfg ]; then
-			echo "File exists. Continuing."
-			cp /boot/pspi/buttons/retrogame.cfg /boot/retrogame.cfg
-			echo "Overwritten."
-		else
-			echo "File doesn't exist."
-			echo "Copy retrogame.cfg to /boot/buttons/ and try again."
-			echo "Failed."
-			exit 1	
-		fi	
-	fi
-else
-	if [ -e /boot/pspi/buttons/retrogame.cfg ]; then
-		echo "File exists. Continuing."
-		cp /boot/pspi/buttons/retrogame.cfg /boot/retrogame.cfg
-		echo "Copied."
-	else
-		echo "File doesn't exist."
-		echo "Copy retrogame.cfg to /boot/buttons/ and try again."
-		echo "Failed."
-		exit 1	
-	fi
-	
-	
-fi
+echo "Copying config file /boot/retrogame.cfg"
+cp -f /boot/pspi/buttons/retrogame.cfg /boot/retrogame.cfg
+
 echo "Copying retrogame to /usr/local/bin/retrogame"
-if [ -e /usr/local/bin/retrogame ]; then
-	echo "/usr/local/bin/retrogame already exists."
-	echo "Overwrite file? [y/n] "
-	read
-	if [[ ! "$REPLY" =~ ^(yes|y|Y)$ ]]; then
-		echo "Not verwritten."
-	else
-		if [ -e /boot/pspi/buttons/retrogame ]; then
-			echo "File exists. Continuing."
-			cp -f /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
-			echo "Overwritten."
-		else
-			echo "File doesn't exist."
-			echo "Copy retrogame to /boot/buttons and try again."
-			echo "Failed."
-			exit 1	
-		fi
-	fi
-else
-	if [ -e /boot/pspi/buttons/retrogame ]; then
-		echo "File exists. Continuing."
-		cp -f /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
-		echo "Copied."
-	else
-		echo "File doesn't exist."
-		echo "Copy retrogame to /boot/buttons/ and try again."
-		echo "Failed."
-		exit 1	
-	fi
-fi
+cp -f /boot/pspi/buttons/retrogame /usr/local/bin/retrogame
 
-	echo "Configuring retrogame to start at boot..."
-	# Add udev rule (will overwrite if present)
+
+echo "Configuring retrogame..."
+# Add udev rule (will overwrite if present)
 echo "SUBSYSTEM==\"input\", ATTRS{name}==\"retrogame\", ENV{ID_INPUT_KEYBOARD}=\"1\"" > /etc/udev/rules.d/10-retrogame.rules
-	# Start on boot
-
 
 # enable I2C on Raspberry Pi
 echo '>>> Enable I2C'
@@ -120,25 +59,31 @@ else
   echo 'File raspi-blacklist.conf does not exist, skip this step.'
 fi
 
-cp /boot/pspi/es_input.cfg /opt/retropie/configs/all/emulationstation/es_input.cfg
-cp /boot/pspi/retroarch.cfg /opt/retropie/configs/all/retroarch.cfg
-cp /boot/pspi/pspi.cfg /opt/retropie/configs/all/retroarch-joypads/pspi.cfg
+cp -f /boot/pspi/configs/es_input.cfg /opt/retropie/configs/all/emulationstation/es_input.cfg
+cp -f /boot/pspi/configs/retroarch.cfg /opt/retropie/configs/all/retroarch.cfg
+cp -f /boot/pspi/configs/pspi.cfg /opt/retropie/configs/all/retroarch-joypads/pspi.cfg
 
 cd /boot/uinput/
 python setup.py install
 
-cp /boot/pspi/cmdline.txt /boot/cmdline.txt
+cp -f /boot/pspi/configs/cmdline.txt /boot/cmdline.txt
 
 #remove DHCP wait
 rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
 
 #add custom startup image
-cp /boot/pspi/pspi.png /home/pi/RetroPie/splashscreens/pspi.png
-cp /boot/pspi/splashscreen.list /etc/splashscreen.list
+cp -f /boot/pspi/configs/pspi.png /home/pi/RetroPie/splashscreens/pspi.png
+cp -f /boot/pspi/configs/splashscreen.list /etc/splashscreen.list
 
 #modify theme
-cp -f /boot/pspi/carbon.xml /etc/emulationstation/themes/carbon/carbon.xml
-cp /boot/pspi/background.png /etc/emulationstation/themes/carbon/art/background.png
+cp -f /boot/pspi/configs/carbon.xml /etc/emulationstation/themes/carbon/carbon.xml
+cp -f /boot/pspi/configs/background.png /etc/emulationstation/themes/carbon/art/background.png
+
+#add WiFi options to retropie menu
+cp -f '/boot/pspi/configs/othermod - WiFi Disable.sh' '/home/pi/RetroPie/retropiemenu/othermod - WiFi Disable.sh'
+cp -f '/boot/pspi/configs/othermod - WiFi Enable.sh' '/home/pi/RetroPie/retropiemenu/othermod - WiFi Enable.sh'
+cp -f '/boot/pspi/configs/othermod - WiFi Normal Speed.sh' '/home/pi/RetroPie/retropiemenu/othermod - WiFi Normal Speed.sh'
+cp -f '/boot/pspi/configs/othermod - WiFi Super Speed.sh' '/home/pi/RetroPie/retropiemenu/othermod - WiFi Super Speed.sh'
 
 read -rsp $'Press any key to reboot...\n' -n1 key
 reboot
