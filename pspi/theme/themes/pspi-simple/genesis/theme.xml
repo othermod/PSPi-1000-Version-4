@@ -1,0 +1,15 @@
+<theme>
+	<formatVersion>4</formatVersion>
+	
+	<include>./../main.xml</include>
+	
+	<view name="system, basic, detailed">
+		<image name="background" extra="true">
+			<path>./background.jpg</path>
+		</image>
+		
+		<image name="logo">
+			<path>./logo.svg</path>
+		</image>
+	</view>
+</theme>

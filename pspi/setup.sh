@@ -82,6 +82,9 @@ cp -f /boot/pspi/theme/splashscreen.list /etc/splashscreen.list
 #also, figure out how to set "power save mode" to Enhanced
 cp -p -r -f  /boot/pspi/theme/themes/carbon /home/pi/.emulationstation/themes/carbon
 
+#add pspi-simple theme (testing) 
+cp -p -r -f  /boot/pspi/theme/themes/pspi-simple /home/pi/.emulationstation/themes/pspi-simple
+
 #add WiFi options tand othermod menu
 #change this so it asks whether you have a Zero W (or better yet, detects whether it's a Zero W), and doesn't WiFi files if the answer is no
 cp -p -r -f  /boot/pspi/theme/scripts /home/pi/RetroPie/othermod
