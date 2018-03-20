@@ -86,7 +86,6 @@ cp -p -r -f  /boot/pspi/theme/themes/carbon /home/pi/.emulationstation/themes/ca
 #change this so it asks whether you have a Zero W (or better yet, detects whether it's a Zero W), and doesn't WiFi files if the answer is no
 cp -p -r -f  /boot/pspi/theme/scripts /home/pi/RetroPie/othermod
 cp -f /boot/pspi/theme/es_systems.cfg /home/pi/.emulationstation/es_systems.cfg
-#cp -p -r -f  /boot/pspi/theme/system /etc/emulationstation/themes/carbon/othermod
 
 read -rsp $'Press any key to reboot...\n' -n1 key
 reboot
