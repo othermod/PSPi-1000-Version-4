@@ -80,9 +80,11 @@ cp -f /boot/pspi/theme/splashscreen.list /etc/splashscreen.list
 #modify theme
 #also, figure out how to change theme so the scrolling is instant instead of fade
 #also, figure out how to set "power save mode" to Enhanced
+rm -r /home/pi/.emulationstation/themes/carbon
 cp -p -r -f  /boot/pspi/theme/themes/carbon /home/pi/.emulationstation/themes/carbon
 
-#add pspi-simple theme (testing) 
+#add pspi-simple theme (testing)
+rm -r /home/pi/.emulationstation/themes/pspi-simple
 cp -p -r -f  /boot/pspi/theme/themes/pspi-simple /home/pi/.emulationstation/themes/pspi-simple
 
 #add WiFi options tand othermod menu
