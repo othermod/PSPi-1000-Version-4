@@ -80,12 +80,8 @@ cp -f /boot/pspi/theme/splashscreen.list /etc/splashscreen.list
 #modify theme
 #also, figure out how to change theme so the scrolling is instant instead of fade
 #also, figure out how to set "power save mode" to Enhanced
-rm -r /opt/retropie/configs/all/emulationstation/themes/carbon
-cp -p -r -f  /boot/pspi/theme/themes/carbon /opt/retropie/configs/all/emulationstation/themes/carbon
-
-#add pspi-simple theme (testing)
-rm -r /opt/retropie/configs/all/emulationstation/themes/pspi-simple
-cp -p -r -f  /boot/pspi/theme/themes/pspi-simple /opt/retropie/configs/all/emulationstation/themes/pspi-simple
+rm -r /opt/retropie/configs/all/emulationstation/themes
+cp -p -r -f  /boot/pspi/theme/themes /opt/retropie/configs/all/emulationstation/themes
 
 #add WiFi options tand othermod menu
 #change this so it asks whether you have a Zero W (or better yet, detects whether it's a Zero W), and doesn't WiFi files if the answer is no
