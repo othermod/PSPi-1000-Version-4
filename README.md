@@ -4,19 +4,25 @@ https://discord.gg/aR5jzUY Version 4 discussion on Discord
 
 **Project Features:**
 
-ADS1015 for joystick and battery detection
+Analog Joystick
 
-MCP23017 for buttons
+Battery Monitor
+
+LCD Backlight Dimming
 
 4.3" LCD, driven by GPIO using custom RGB 565 overlay
 
+Works with *Retropie 4.3*. I'm looking into RetroPie 4.4.
+
 Made for Pi Zero and Zero W, compatible with Pi 3 if modification is done
 
-**Current Status**
+**Installation Instructions Using Image**
 
-Code is stable, tweaks and improvements will be added
+Download the read-to-use image from Google Drive: http://bit.ly/2pF0u2n
 
-**Installation Instructions for Offline Installation - This is gradually becoming more automated**
+Extract the image and use imaging software (such as Win32DiskImager or Etcher) to image your SD card
+
+**Installation Instructions for Offline Installation**
 
 Download repository, extract and copy all subfolders to the BOOT partition of a fresh RetroPie image. You must overwrite the original config.txt
 
