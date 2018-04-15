@@ -68,7 +68,8 @@ cd /boot/uinput/
 python setup.py install
 
 #overwrite cmdline, for cleaner startup
-cp -f /boot/pspi/configs/cmdline.txt /boot/cmdline.txt
+#breaks raspbian stretch, disabled for now
+#cp -f /boot/pspi/configs/cmdline.txt /boot/cmdline.txt
 
 #remove DHCP wait, for faster bootup
 rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
