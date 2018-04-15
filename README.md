@@ -12,7 +12,7 @@ LCD Backlight Dimming
 
 4.3" LCD, driven by GPIO using custom RGB 565 overlay
 
-Works with *Retropie 4.3*. I'm looking into RetroPie 4.4.
+Works with **Retropie 4.3**. I'm looking into RetroPie 4.4.
 
 Made for Pi Zero and Zero W, compatible with Pi 3 if modification is done
 
