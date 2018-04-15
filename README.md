@@ -16,13 +16,13 @@ Works with **Retropie 4.3**. I'm looking into RetroPie 4.4.
 
 Made for Pi Zero and Zero W, compatible with Pi 3 if modification is done
 
-**Installation Instructions Using Image**
+**Option 1 - Installation Instructions Using Image**
 
 Download the read-to-use image from Google Drive: http://bit.ly/2pF0u2n
 
 Extract the image and use imaging software (such as Win32DiskImager or Etcher) to image your SD card
 
-**Installation Instructions for Offline Installation**
+**Option 2 - Installation Instructions for Offline Installation**
 
 Download repository, extract and copy all subfolders to the BOOT partition of a fresh RetroPie image. You must overwrite the original config.txt
 
