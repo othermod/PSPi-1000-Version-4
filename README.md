@@ -18,7 +18,7 @@ Made for Pi Zero and Zero W, compatible with Pi 3 if modification is done
 
 **Option 1 - Installation Instructions Using Image**
 
-Download the read-to-use image from Google Drive: http://bit.ly/2pF0u2n
+Download the ready-to-use image from Google Drive: http://bit.ly/2pF0u2n
 
 Extract the image and use imaging software (such as Win32DiskImager or Etcher) to image your SD card
 
