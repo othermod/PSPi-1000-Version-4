@@ -81,15 +81,13 @@ cp -f /boot/pspi/theme/splashscreen.list /etc/splashscreen.list
 #modify theme
 #also, figure out how to change theme so the scrolling is instant instead of fade
 #also, figure out how to set "power save mode" to Enhanced
-cp -f /boot/pspi/theme/carbon.xml /etc/emulationstation/themes/carbon/carbon.xml
-cp -f /boot/pspi/theme/background.png /etc/emulationstation/themes/carbon/art/background.png
+rm -r /opt/retropie/configs/all/emulationstation/themes
+cp -p -r -f  /boot/pspi/theme/themes /opt/retropie/configs/all/emulationstation/themes
 
 #add WiFi options tand othermod menu
 #change this so it asks whether you have a Zero W (or better yet, detects whether it's a Zero W), and doesn't WiFi files if the answer is no
 cp -p -r -f  /boot/pspi/theme/scripts /home/pi/RetroPie/othermod
-cp -f /boot/pspi/theme/es_systems.cfg /etc/emulationstation/es_systems.cfg
-cp -p -r -f  /boot/pspi/theme/system /etc/emulationstation/themes/carbon/othermod
+cp -f /boot/pspi/theme/es_systems.cfg /opt/retropie/configs/all/emulationstation/es_systems.cfg
 
 read -rsp $'Press any key to reboot...\n' -n1 key
 reboot
-

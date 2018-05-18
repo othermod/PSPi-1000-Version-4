@@ -1,0 +1,121 @@
+<!--
+Theme Name:		PSPI-Simple
+version:		1.0
+Author:			Nicholaus Butler
+Based On:		"Simple" by Nils Bonenberger
+License:		creative commons CC-BY-NC-SA
+-->
+
+<theme>
+	<formatVersion>4</formatVersion>
+	
+	<view name="system, basic, detailed">
+		<image name="background" extra="true">
+			<pos>0.5 0.5</pos>
+			<origin>0.5 0.5</origin>
+			<size>0 1</size>
+			<path>./_inc/images/white.png</path>
+		</image>
+		
+		<!--<image name="footer" extra="true">
+			<pos>0 1</pos>
+			<origin>0 1</origin>
+			<size>1 0.065</size>
+			<path>./_inc/images/white.png</path>
+			<color>ffffffd8</color>
+		</image>-->
+		
+		<helpsystem name="help">
+			<fontPath>./_inc/fonts/invisible.ttf</fontPath>
+			<textColor>33333300</textColor>
+			<iconColor>33333300</iconColor>
+		</helpsystem>
+	</view>
+	
+	<feature supported="carousel">
+		<view name="system">
+			<text name="systemInfo">
+				<backgroundColor>00000000</backgroundColor>
+				<color>00000000</color>
+			</text>
+		</view>
+	</feature>
+	
+	<view name="basic, detailed">
+		<image name="header" extra="true">
+			<pos>0 0</pos>
+			<origin>0 0</origin>
+			<size>1 0.16</size>
+			<path>./_inc/images/white.png</path>
+			<color>ffffffd8</color>
+		</image>
+		
+		<image name="background_filter" extra="true">
+			<pos>0 0.16</pos>
+			<origin>0 0</origin>
+			<size>1 0.85</size>
+			<path>./_inc/images/black.png</path>
+			<color>00000080</color>
+		</image>
+		
+		<image name="logo">
+			<pos>0.017 0.08</pos>
+			<origin>0 0.5</origin>
+			<maxSize>0.5 0.1</maxSize>
+		</image>
+		
+		<textlist name="gamelist">
+			<selectorColor>ffffffcc</selectorColor>
+			<selectedColor>333333</selectedColor>
+			<primaryColor>ffffffcc</primaryColor>
+			<secondaryColor>ffffffcc</secondaryColor>
+			<fontPath>./_inc/fonts/Roboto-Medium.ttf</fontPath>
+			<fontSize>0.04</fontSize>
+			<forceUppercase>1</forceUppercase>
+			<scrollSound>./_inc/sounds/scroll.wav</scrollSound>
+			<horizontalMargin>0.01</horizontalMargin>
+		</textlist>
+		
+		<text name="md_lbl_rating, md_lbl_releasedate,md_lbl_developer,
+			md_lbl_publisher, md_lbl_genre, md_lbl_players,
+			md_lbl_lastplayed, md_lbl_playcount">
+			<fontPath>./_inc/fonts/invisible.ttf</fontPath>
+		</text>
+		
+		<text name="md_developer, md_publisher, md_genre, md_players,
+			md_playcount, md_description">
+			<fontPath>./_inc/fonts/invisible.ttf</fontPath>
+		</text>
+		
+		<datetime name="md_releasedate, md_lastplayed">
+			<fontPath>./_inc/fonts/invisible.ttf</fontPath>
+		</datetime>
+		
+		<rating name="md_rating">
+			<filledPath>./_inc/images/invisible.png</filledPath>
+			<unfilledPath>./_inc/images/invisible.png</unfilledPath>
+		</rating>
+	</view>
+	
+	<view name="basic">
+		<textlist name="gamelist">
+			<pos>0.017 0.19</pos>
+			<size>0.966 0.78</size>
+			<alignment>center</alignment>
+		</textlist>
+	</view>
+	
+	<view name="detailed">
+		<image name="md_image">
+			<pos>0.255 0.58</pos>
+			<origin>0.5 0.5</origin>
+			<maxSize>0.475 0.78</maxSize>
+		</image>
+		
+		<textlist name="gamelist">
+			<pos>0.508 0.19</pos>
+			<size>0.475 0.78</size>
+			<alignment>left</alignment>
+		</textlist>
+	</view>
+</theme>
