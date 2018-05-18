@@ -1133,22 +1133,19 @@ int main(int argc, char *argv[]) {
 	          //   not Mute, GPIO40 (intstate = xxxx xxx0 11xx xxxx = 192),
 	          // that we are on the Select event (i = 39),
 	          // and that Mute, GPIO40, is an active key in retrogame.cfg
-	          if((a == 1) && ((intstate[a] & 448) == 192) && (i == 39) &&
-	              (key[i + 1] > KEY_RESERVED) && (key[i + 1] < GND)) {
-	            intstate[a] &= ~b; // Remove GPIO39 press
-	            b <<= 1; // Shift to next GPIO pin
-	            intstate[a] |= b; // Add GPIO40 press
-	            i++; // Skip GPIO39 press event since we removed it
-	          }
-			  
-	          // Code for single key volume up/down in game
-	          if((a == 1) && ((i == 41) || (i == 42)) &&
-	            (((intstate[a] & 768) == 512) || ((intstate[a] & 1280) == 1024)) &&
-	            (key[40] > KEY_RESERVED) && (key[40] < GND)) {
-	            b >>= (i - 40);
-	            i -= (i - 40);
-	            intstate[a] |= 256;
-	          }
+	          if((a == 1) && (key[40] > KEY_RESERVED) && (key[40] < GND)) {
+			    if((i == 39) && ((intstate[a] & 448) == 192)) {
+	              intstate[a] &= ~b; // Remove GPIO39 press
+	              b <<= 1; // Shift to next GPIO pin
+	              intstate[a] |= b; // Add GPIO40 press
+	              i++; // Skip GPIO39 press event since we removed it
+	            } else if (((i == 41) && ((intstate[a] & 768) == 512)) ||
+				  ((i == 42) && ((intstate[a] & 1280) == 1024))) {
+	              b >>= (i - 40);
+	              i -= (i - 40);
+	              intstate[a] |= 256;
+	            }
+			  }
 	          /***********************************************************/
 	          // Compare internal state against previously-issued value.
 	          // Send keys only for changed states.
