@@ -1128,17 +1128,31 @@ int main(int argc, char *argv[]) {
 	          // PSPI - Intercept Home button press and change it from
 	          //        Start and Select to Start and Mute
 	          /***********************************************************/
-	          // Check that we are in I2C address 0x20 (a = 1),
-	          // that Start, GPIO38, and Select, GPIO39 are pressed, but
-	          //   not Mute, GPIO40 (intstate = xxxx xxx0 11xx xxxx = 192),
-	          // that we are on the Select event (i = 39),
+	          // Check that we are in I2C address 0x20 (a = 1)
 	          // and that Mute, GPIO40, is an active key in retrogame.cfg
-	          if((a == 1) && ((intstate[a] & 448) == 192) && (i == 39) &&
-	              (key[i + 1] > KEY_RESERVED) && (key[i + 1] < GND)) {
-	            intstate[a] &= ~b; // Remove GPIO39 press
-	            b <<= 1; // Shift to next GPIO pin
-	            intstate[a] |= b; // Add GPIO40 press
-	            i++; // Skip GPIO39 press event since we removed it
+	          if((a == 1) && (key[40] > KEY_RESERVED) && (key[40] < GND)) {
+	            // Check that we are on the Select event (i = 39) and that
+	            // Start, GPIO38, and Select, GPIO39, are pressed, but not
+	            // Mute, GPIO40 (intstate = xxxx xxx0 11xx xxxx = 192)
+	            if((i == 39) && ((intstate[a] & 448) == 192)) {
+	              intstate[a] &= ~b; // Remove GPIO39 press
+	              b <<= 1; // Shift to next GPIO pin
+	              intstate[a] |= b; // Add GPIO40 press
+	              i++; // Skip GPIO39 press event since we removed it
+	            }
+	            // Check that we are on the Volume Down event (i = 41)
+	            // and that Volume Down, GPIO41, is pressed, but not
+	            // Mute, GPIO40 (intstate = xxxx xx10 xxxx xxxx), or
+	            // that we are on the Volume Up event (i = 42) and that
+	            // Volume Up, GPIO42, is pressed, but not mute, GPIO40
+	            // (intstate = xxxx x1x0 xxxx xxxx)
+	            else if(((i == 41) && ((intstate[a] & 768) == 512)) ||
+	              ((i == 42) && ((intstate[a] & 1280) == 1024))) {
+	              // Code for single key volume up/down in game
+	              b >>= (i - 40); // Shift to GPIO40
+	              i -= (i - 40); // Jump back to GPIO40 press event
+	              intstate[a] |= 256;
+	            }
 	          }
 	          /***********************************************************/
 	          // Compare internal state against previously-issued value.
