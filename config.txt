@@ -1,0 +1,61 @@
+#dtoverlay=pi3-disable-bt
+#dtoverlay=pi3-disable-wifi
+
+disable_splash=1
+
+dtoverlay=i2c0
+
+# Enable audio (loads snd_bcm2835)
+dtparam=audio=on
+disable_audio_dither=1
+audio_pwm_mode=2
+
+[all]
+#dtoverlay=vc4-fkms-v3d
+gpu_mem_256=128
+gpu_mem_512=256
+gpu_mem_1024=256
+overscan_scale=1
+
+#Set GPIO pins to 18-Bit DPI Mode 6
+#GPIO 0 and 1 needed for DPI Clock and Data Enable
+gpio=0=a2,np
+gpio=1=a2,np
+gpio=2=a2,np
+gpio=3=a2,np
+dtoverlay=gpio-shutdown,gpio_pin=4 # pin that issues a shutdown command
+gpio=5=a2,np
+gpio=6=a2,np
+gpio=7=a2,np
+gpio=8=a2,np
+gpio=9=a2,np
+dtparam=act_led_gpio=10 # activity LED
+@gpio=11=ip,pu #interrupt pin for expander, not used currently
+gpio=12=a2,np
+gpio=13=a2,np
+gpio=14=a2,np
+gpio=15=a2,np
+gpio=16=a2,np
+gpio=17=a2,np
+gpio=18=ip,pu #this shouldnt be here, test after removing
+dtoverlay=pwm,pin=18,func=2 # mono audio
+gpio=19=op,dh # pull BL pin up to set brightness to 100&
+gpio=20=ip,pu #display button
+gpio=21=a2,np
+gpio=22=a2,np
+gpio=23=a2,np
+gpio=24=a2,np
+gpio=25=a2,np
+#gpio 26 doesn't have a function. It's the extra LED
+
+gpio=27=ip,pu
+dtoverlay=gpio-poweroff,gpiopin=27,active_low="y" # poweroff pin
+
+gpio=28=a0,np
+gpio=29=a0,np
+
+include lcd.txt
+
+#LCD backlight wasn't cooperating at power-on, so I'm setting the pin off and on again
+gpio=19=ip,pu
+gpio=19=op,dh
