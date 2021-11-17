@@ -346,7 +346,7 @@ void updateOSD(int position) {
 		if (indicationVoltage > 3899) {chargeStatus = 9;}
 		if (indicationVoltage > 3939) {chargeStatus = 99;}
 		
-		printf("ADC:%d\n",indicationVoltage);
+		//printf("ADC:%d\n",indicationVoltage);
 	}
 	else{
 		if (readVoltage > indicationVoltage){indicationVoltage++;}
@@ -359,11 +359,11 @@ void updateOSD(int position) {
 		if (indicationVoltage > 4072) {chargeStatus = 7;}
 		if (indicationVoltage > 4160) {chargeStatus = 99;}
 		
-		printf("ADC:%d\n",indicationVoltage);
+		//printf("ADC:%d\n",indicationVoltage);
 	}
 
 	if ((previousChargeStatus != chargeStatus) || (previousIsCharging != isCharging) || (previousIsMute != isMute)) { // Change Battery Status
-		printf("Indication Changed");
+		//printf("Indication Changed\n");
 		char temp[512];
 		system ("sudo killall pngview 2>/dev/null");
 		sprintf(temp, "/home/pi/PSPi/Driver/./pngview -n -b 0 -l 100000 -x %d -y 2 /home/pi/PSPi/Driver/PNG/battery%d%d%d.png &",position - 46,isMute,isCharging,chargeStatus);
