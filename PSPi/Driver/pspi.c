@@ -13,16 +13,12 @@
 #include <linux/uinput.h>
 #include <stdbool.h>
 
-
-
 const int analogInput[] = {
   0x40,
   0x50,
   0x60,
   0x70
 }; //Analog Selection for 0/1/2/3
-
-
 
 uint8_t readBuffer[2];
 uint8_t writeBuffer[3];
@@ -303,13 +299,73 @@ void updateButtons(int UInputFIle, int buttons) {
   sendInputEvent(UInputFIle, EV_KEY, BTN_SELECT, !((buttons >> 0x0F) & 1));
 
   //disabling joystick for now, will finish that later
-  //uint8_t joystickValue = ADCstore[0]/13; //dividing by 13 to get a center point of 127
-  //sendInputEvent(UInputFIle, EV_ABS, ABS_X, joystickValue);
-  //joystickValue = ADCstore[1]/13;
-  //sendInputEvent(UInputFIle, EV_ABS, ABS_Y, joystickValue);
+  uint8_t joystickValue = ADCstore[0]/13; //dividing by 13 to get a center point of 127
+  joystickValue = 127;
+  sendInputEvent(UInputFIle, EV_ABS, ABS_X, joystickValue);
+  joystickValue = ADCstore[1]/13;
+  joystickValue = 127;
+  sendInputEvent(UInputFIle, EV_ABS, ABS_Y, joystickValue);
+}
+
+int readResolution() {
+	FILE *f = fopen("pspi.cfg","r"); // stores horizontal resolution to variable so this works with both LCD types
+	char buf[4];
+	for (int i = 0 ; i != 0 ; i++) {
+    		fgets(buf, 4, f);
+	}
+	int result;
+	fscanf(f, "%d", &result); // would be better to grab it directly, but I'll have to work out the method
+	return result;
+}
+
+bool isCharging = 0;
+bool previousIsCharging = 0;
+bool isMute = 1;
+bool previousIsMute = 1;
+int previousChargeStatus = 99;
+int previousIndicationVoltage = 4200;
+int chargeStatus = 99;
+
+void updateOSD(int position) {
+	previousIsCharging = isCharging;
+	if (ADCstore[2] < 500) {isCharging = 1;}
+	if (ADCstore[2] > 1000) {isCharging = 0;}
+	
+	previousChargeStatus = chargeStatus;
+	chargeStatus = 0;
+	int indicationVoltage = ADCstore[3];
+	if (isCharging == 0){
+		if (indicationVoltage > 3600) {chargeStatus = 1;}
+		if (indicationVoltage > 3638) {chargeStatus = 2;}
+		if (indicationVoltage > 3678) {chargeStatus = 3;}
+		if (indicationVoltage > 3716) {chargeStatus = 4;}
+		if (indicationVoltage > 3748) {chargeStatus = 5;}
+		if (indicationVoltage > 3786) {chargeStatus = 6;}
+		if (indicationVoltage > 3827) {chargeStatus = 7;}
+		if (indicationVoltage > 3873) {chargeStatus = 8;}
+		if (indicationVoltage > 3899) {chargeStatus = 9;}
+		if (indicationVoltage > 3939) {chargeStatus = 99;}
+		if (indicationVoltage > previousIndicationVoltage) {indicationVoltage = previousIndicationVoltage;}
+	}
+	if (isCharging == 1){
+		if (indicationVoltage > 4000) {chargeStatus = 2;}
+		if (indicationVoltage > 4023) {chargeStatus = 4;}
+		if (indicationVoltage > 4072) {chargeStatus = 7;}
+		if (indicationVoltage > 4160) {chargeStatus = 99;}
+		if (indicationVoltage < previousIndicationVoltage) {indicationVoltage = previousIndicationVoltage;}
+	}
+	previousIndicationVoltage = indicationVoltage;
+	if ((previousChargeStatus != chargeStatus) || (previousIsCharging != isCharging) || (previousIsMute != isMute)) { // Change Battery Status
+		printf("ADC:%d\n",indicationVoltage);
+		char temp[512];
+		system ("sudo killall pngview 2>/dev/null");
+		sprintf(temp, "/home/pi/PSPi/Driver/./pngview -n -b 0 -l 100000 -x %d -y 2 /home/pi/PSPi/Driver/PNG/battery%d%d%d.png &",position - 46,isMute,isCharging,chargeStatus);
+		system((char *)temp);
+	}
 }
 
 int main(void) {
+  int resolution = readResolution();
   int gpio = 11;
   digitalPinMode(gpio); //set gpio 11 to input
   int adcFile = ads1015_open(); // open ADC I2C device
@@ -320,15 +376,29 @@ int main(void) {
   //comment out until everything else is done
   int UInputFIle = createUInputDevice(); // create uinput device
   int ADC = 0;
-
+  uint8_t sleepADC = 0;
+  
+  //set initial button condition
+  mcp23017_read(mcpFile); 
+  uint16_t tempReadBuffer = 0x00;
+  updateButtons(UInputFIle, tempReadBuffer);
+  
   while (1) {
-    readADC(adcFile, ADC); //read the ADC
+	  sleepADC++;
+	  if (sleepADC == 15) {sleepADC = 0;}
+	  if (sleepADC == 0) { //only check ADC every 256 cycles since we are only checking for battery right now
+		readADC(adcFile, ADC); //read the ADC
+		//printf("ADC%d:%d\n",ADC,ADCstore[ADC]);
+		ADC++;
+		if (ADC > 3) {ADC = 0;}
+		ads1015WriteConfig(adcFile, ADC); //set configuration for ADS1015 for next loop
+		updateOSD(resolution);
+	  }
+	
     mcp23017_read(mcpFile); //read the expander
-    uint16_t tempReadBuffer = (mcpReadBuffer[0] << 8) | (mcpReadBuffer[1] & 0xff);
-    if (tempReadBuffer != previousReadBuffer) { updateButtons(UInputFIle, tempReadBuffer); } //only update the joystick when a button is pressed for the time being. will add a check for joystick later
-    ADC++;
-    if (ADC > 3) {ADC = 0;}
-    ads1015WriteConfig(adcFile, ADC); //set configuration for ADS1015 for next loop
+    tempReadBuffer = (mcpReadBuffer[0] << 8) | (mcpReadBuffer[1] & 0xff);
+    if (tempReadBuffer != previousReadBuffer) { 
+		updateButtons(UInputFIle, tempReadBuffer); } //only update the controller when a button is pressed for the time being. will add a check for joystick later
     previousReadBuffer = tempReadBuffer;
     usleep(16666); // sleep for about 1/60th of a second. Also gives the ADC enough time to prepare the next reading
   }
