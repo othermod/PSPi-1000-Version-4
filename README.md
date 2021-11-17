@@ -13,4 +13,4 @@ A total rewrite of this board's software is in progress, to make it work with th
 - [ ] Configure controller buttons in Retroarch and games
 
 ### Progress for the Raspberry Pi Zero 2 W (will bring everything over once the original Zero is working):
-[ ] Install necessary updates and hacks to get PWM audio working on the new version of the OS
+- [ ] Install necessary updates and hacks to get PWM audio working on the new version of the OS
