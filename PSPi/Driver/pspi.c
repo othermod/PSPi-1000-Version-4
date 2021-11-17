@@ -319,22 +319,22 @@ int readResolution() {
 }
 
 bool isCharging = 0;
-bool previousIsCharging = 0;
+bool previousIsCharging = 1;
 bool isMute = 1;
 bool previousIsMute = 1;
 int previousChargeStatus = 99;
-int previousIndicationVoltage = 4200;
 int chargeStatus = 99;
+int indicationVoltage = 4200;
 
 void updateOSD(int position) {
-	previousIsCharging = isCharging;
-	if (ADCstore[2] < 500) {isCharging = 1;}
-	if (ADCstore[2] > 1000) {isCharging = 0;}
-	
-	previousChargeStatus = chargeStatus;
 	chargeStatus = 0;
-	int indicationVoltage = ADCstore[3];
+	int readVoltage = ADCstore[3];
 	if (isCharging == 0){
+		if (readVoltage < indicationVoltage){indicationVoltage--;}
+		if (ADCstore[2] < 500) {
+			isCharging = 1;
+			indicationVoltage = readVoltage;
+			}
 		if (indicationVoltage > 3600) {chargeStatus = 1;}
 		if (indicationVoltage > 3638) {chargeStatus = 2;}
 		if (indicationVoltage > 3678) {chargeStatus = 3;}
@@ -345,23 +345,32 @@ void updateOSD(int position) {
 		if (indicationVoltage > 3873) {chargeStatus = 8;}
 		if (indicationVoltage > 3899) {chargeStatus = 9;}
 		if (indicationVoltage > 3939) {chargeStatus = 99;}
-		if (indicationVoltage > previousIndicationVoltage) {indicationVoltage = previousIndicationVoltage;}
+		
+		printf("ADC:%d\n",indicationVoltage);
 	}
-	if (isCharging == 1){
+	else{
+		if (readVoltage > indicationVoltage){indicationVoltage++;}
+		if (ADCstore[2] > 1000) {
+			isCharging = 0;
+			indicationVoltage = readVoltage;
+			}
 		if (indicationVoltage > 4000) {chargeStatus = 2;}
 		if (indicationVoltage > 4023) {chargeStatus = 4;}
 		if (indicationVoltage > 4072) {chargeStatus = 7;}
 		if (indicationVoltage > 4160) {chargeStatus = 99;}
-		if (indicationVoltage < previousIndicationVoltage) {indicationVoltage = previousIndicationVoltage;}
-	}
-	previousIndicationVoltage = indicationVoltage;
-	if ((previousChargeStatus != chargeStatus) || (previousIsCharging != isCharging) || (previousIsMute != isMute)) { // Change Battery Status
+		
 		printf("ADC:%d\n",indicationVoltage);
+	}
+
+	if ((previousChargeStatus != chargeStatus) || (previousIsCharging != isCharging) || (previousIsMute != isMute)) { // Change Battery Status
+		printf("Indication Changed");
 		char temp[512];
 		system ("sudo killall pngview 2>/dev/null");
 		sprintf(temp, "/home/pi/PSPi/Driver/./pngview -n -b 0 -l 100000 -x %d -y 2 /home/pi/PSPi/Driver/PNG/battery%d%d%d.png &",position - 46,isMute,isCharging,chargeStatus);
 		system((char *)temp);
 	}
+	previousChargeStatus = chargeStatus;
+	previousIsCharging = isCharging;
 }
 
 int main(void) {
@@ -370,14 +379,24 @@ int main(void) {
   digitalPinMode(gpio); //set gpio 11 to input
   int adcFile = ads1015_open(); // open ADC I2C device
   int mcpFile = mcp23017_open(); // open Expander device
+  
+  //set initial ADC condition
+  ads1015SetConfig(adcFile, 2);
+  usleep(16666);
+  readADC(adcFile, 2);
+  ads1015SetConfig(adcFile, 3);
+  usleep(16666);
+  readADC(adcFile, 3);
   ads1015SetConfig(adcFile, 0);
+  usleep(16666);
+  
   mcp23017WriteConfig(mcpFile);
 
   //comment out until everything else is done
   int UInputFIle = createUInputDevice(); // create uinput device
-  int ADC = 0;
-  uint8_t sleepADC = 0;
   
+  uint8_t sleepADC = 0;
+  int ADC = 0;
   //set initial button condition
   mcp23017_read(mcpFile); 
   uint16_t tempReadBuffer = 0x00;
@@ -385,8 +404,8 @@ int main(void) {
   
   while (1) {
 	  sleepADC++;
-	  if (sleepADC == 15) {sleepADC = 0;}
-	  if (sleepADC == 0) { //only check ADC every 256 cycles since we are only checking for battery right now
+	  if (sleepADC == 8) {sleepADC = 0;}
+	  if (sleepADC == 7) { //only check ADC every 256 cycles since we are only checking for battery right now
 		readADC(adcFile, ADC); //read the ADC
 		//printf("ADC%d:%d\n",ADC,ADCstore[ADC]);
 		ADC++;
