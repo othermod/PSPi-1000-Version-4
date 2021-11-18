@@ -217,10 +217,10 @@ int createUInputDevice() {
   ioctl(fd, UI_SET_EVBIT, EV_KEY);
   ioctl(fd, UI_SET_EVBIT, EV_REL);
   // button
-  ioctl(fd, UI_SET_KEYBIT, BTN_A);
-  ioctl(fd, UI_SET_KEYBIT, BTN_B);
-  ioctl(fd, UI_SET_KEYBIT, BTN_X);
-  ioctl(fd, UI_SET_KEYBIT, BTN_Y);
+  ioctl(fd, UI_SET_KEYBIT, BTN_EAST);
+  ioctl(fd, UI_SET_KEYBIT, BTN_SOUTH);
+  ioctl(fd, UI_SET_KEYBIT, BTN_NORTH);
+  ioctl(fd, UI_SET_KEYBIT, BTN_WEST);
   ioctl(fd, UI_SET_KEYBIT, BTN_TL);
   ioctl(fd, UI_SET_KEYBIT, BTN_TR);
   ioctl(fd, UI_SET_KEYBIT, BTN_SELECT);
@@ -230,9 +230,24 @@ int createUInputDevice() {
   ioctl(fd, UI_SET_KEYBIT, BTN_DPAD_LEFT);
   ioctl(fd, UI_SET_KEYBIT, BTN_DPAD_RIGHT);
   ioctl(fd, UI_SET_KEYBIT, BTN_1);
-  ioctl(fd, UI_SET_KEYBIT, BTN_2);
-  ioctl(fd, UI_SET_KEYBIT, BTN_3);
-  ioctl(fd, UI_SET_KEYBIT, BTN_4);
+  //ioctl(fd, UI_SET_KEYBIT, BTN_2);
+  //ioctl(fd, UI_SET_KEYBIT, BTN_3);
+  //ioctl(fd, UI_SET_KEYBIT, BTN_4);
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   // axis
   ioctl(fd, UI_SET_EVBIT, EV_ABS);
   ioctl(fd, UI_SET_ABSBIT, ABS_X);
@@ -281,9 +296,9 @@ void sendInputEvent(int fd, uint16_t type, uint16_t code, int32_t value) {
 
 void updateButtons(int UInputFIle, int buttons) {
   // update button event
-  sendInputEvent(UInputFIle, EV_KEY, KEY_MUTE, !((buttons >> 0x00) & 1));
-  sendInputEvent(UInputFIle, EV_KEY, KEY_VOLUMEUP, !((buttons >> 0x01) & 1));
-  sendInputEvent(UInputFIle, EV_KEY, KEY_VOLUMEDOWN, !((buttons >> 0x02) & 1));
+  //sendInputEvent(UInputFIle, EV_KEY, mute?, !((buttons >> 0x00) & 1)); //mute button
+  //sendInputEvent(UInputFIle, EV_KEY, KEY_VOLUMEUP, !((buttons >> 0x01) & 1)); //volume up
+  //sendInputEvent(UInputFIle, EV_KEY, KEY_VOLUMEDOWN, !((buttons >> 0x02) & 1)); ////volume down
   sendInputEvent(UInputFIle, EV_KEY, BTN_TL, !((buttons >> 0x03) & 1));
   sendInputEvent(UInputFIle, EV_KEY, BTN_DPAD_LEFT, !((buttons >> 0x04) & 1));
   sendInputEvent(UInputFIle, EV_KEY, BTN_DPAD_UP, !((buttons >> 0x05) & 1));
@@ -295,8 +310,9 @@ void updateButtons(int UInputFIle, int buttons) {
   sendInputEvent(UInputFIle, EV_KEY, BTN_WEST, !((buttons >> 0x0B) & 1));
   sendInputEvent(UInputFIle, EV_KEY, BTN_SOUTH, !((buttons >> 0x0C) & 1));
   //sendInputEvent(UInputFIle, EV_KEY, HOLD, 			!((buttons >> 0x0D) & 1));
-  sendInputEvent(UInputFIle, EV_KEY, BTN_START, !((buttons >> 0x0E) & 1));
-  sendInputEvent(UInputFIle, EV_KEY, BTN_SELECT, !((buttons >> 0x0F) & 1));
+  sendInputEvent(UInputFIle, EV_KEY, BTN_START, !((buttons >> 0x0E) & 1)&((buttons >> 0x0F) & 1));
+  sendInputEvent(UInputFIle, EV_KEY, BTN_SELECT, !((buttons >> 0x0F) & 1)&((buttons >> 0x0E) & 1));
+  sendInputEvent(UInputFIle, EV_KEY, BTN_1, !((buttons >> 0x0E) & 1)&!((buttons >> 0x0F) & 1)); //fake button for start+select
 
   //disabling joystick for now, will finish that later
   uint8_t joystickValue = ADCstore[0]/13; //dividing by 13 to get a center point of 127
