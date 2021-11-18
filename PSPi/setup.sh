@@ -94,6 +94,7 @@ cp -f /boot/PSPi/Configs/pspi_controller.service /etc/systemd/system/pspi_contro
 systemctl enable pspi_controller 2>/dev/null
 
 # fix file permissions
+chmod 0755 /boot/PSPi/pi-blaster
 chmod 0755 /home/pi/PSPi/Driver/pspi
 chmod 0755 /home/pi/PSPi/Driver/pngview
 
