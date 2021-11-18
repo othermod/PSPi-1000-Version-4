@@ -10,7 +10,7 @@ A total rewrite of this board's software is in progress, to make it work with th
 - [x] Add adjustment of display brightness using the Display button (currently just using a Python script)
 - [x] Get PWM audio working
 - [x] Configure controller buttons in EmulationStation
-- [ ] Configure controller buttons in Retroarch and games
+- [x] Configure controller buttons in Retroarch and games
 - [ ] Create downloadable image that can be flashed to an SD
 
 + ### Progress for the Raspberry Pi Zero 2 W (will bring everything over once the original Zero is working):
