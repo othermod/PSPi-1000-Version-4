@@ -233,20 +233,7 @@ int createUInputDevice() {
   //ioctl(fd, UI_SET_KEYBIT, BTN_2);
   //ioctl(fd, UI_SET_KEYBIT, BTN_3);
   //ioctl(fd, UI_SET_KEYBIT, BTN_4);
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+    
   
   // axis
   ioctl(fd, UI_SET_EVBIT, EV_ABS);
@@ -296,9 +283,9 @@ void sendInputEvent(int fd, uint16_t type, uint16_t code, int32_t value) {
 
 void updateButtons(int UInputFIle, int buttons) {
   // update button event
-  //sendInputEvent(UInputFIle, EV_KEY, mute?, !((buttons >> 0x00) & 1)); //mute button
-  //sendInputEvent(UInputFIle, EV_KEY, KEY_VOLUMEUP, !((buttons >> 0x01) & 1)); //volume up
-  //sendInputEvent(UInputFIle, EV_KEY, KEY_VOLUMEDOWN, !((buttons >> 0x02) & 1)); ////volume down
+  //sendInputEvent(UInputFIle, EV_KEY, BTN_2, !((buttons >> 0x00) & 1)); //mute button
+  //sendInputEvent(UInputFIle, EV_KEY, BTN_3, !((buttons >> 0x01) & 1)); //volume up
+  //sendInputEvent(UInputFIle, EV_KEY, BTN_4, !((buttons >> 0x02) & 1)); ////volume down
   sendInputEvent(UInputFIle, EV_KEY, BTN_TL, !((buttons >> 0x03) & 1));
   sendInputEvent(UInputFIle, EV_KEY, BTN_DPAD_LEFT, !((buttons >> 0x04) & 1));
   sendInputEvent(UInputFIle, EV_KEY, BTN_DPAD_UP, !((buttons >> 0x05) & 1));
@@ -351,6 +338,7 @@ void updateOSD(int position) {
 			isCharging = 1;
 			indicationVoltage = readVoltage;
 			}
+		if (indicationVoltage < 3601) {chargeStatus = 0;}
 		if (indicationVoltage > 3600) {chargeStatus = 1;}
 		if (indicationVoltage > 3638) {chargeStatus = 2;}
 		if (indicationVoltage > 3678) {chargeStatus = 3;}
@@ -361,7 +349,6 @@ void updateOSD(int position) {
 		if (indicationVoltage > 3873) {chargeStatus = 8;}
 		if (indicationVoltage > 3899) {chargeStatus = 9;}
 		if (indicationVoltage > 3939) {chargeStatus = 99;}
-		
 		//printf("ADC:%d\n",indicationVoltage);
 	}
 	else{
@@ -370,11 +357,11 @@ void updateOSD(int position) {
 			isCharging = 0;
 			indicationVoltage = readVoltage;
 			}
+		if (indicationVoltage < 4001) {chargeStatus = 1;}
 		if (indicationVoltage > 4000) {chargeStatus = 2;}
 		if (indicationVoltage > 4023) {chargeStatus = 4;}
 		if (indicationVoltage > 4072) {chargeStatus = 7;}
 		if (indicationVoltage > 4160) {chargeStatus = 99;}
-		
 		//printf("ADC:%d\n",indicationVoltage);
 	}
 
