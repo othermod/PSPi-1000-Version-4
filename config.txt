@@ -5,7 +5,6 @@ disable_splash=1
 
 #dtparam=i2c_arm=on
 #dtparam=i2c_vc=on
-dtoverlay=i2c0
 
 # Enable audio (loads snd_bcm2835)
 dtparam=audio=on
@@ -58,9 +57,5 @@ dtoverlay=gpio-poweroff,gpiopin=27,active_low="y"
 # Needed because gpio-poweroff is too slow
 gpio=27=op,dh
 
-#I2C
-gpio=28=a0,np
-gpio=29=a0,np
-
 include lcd.txt
-
+include i2c.txt

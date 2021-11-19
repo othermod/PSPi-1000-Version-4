@@ -1,0 +1,1 @@
+dtoverlay=i2c0,pins_28_29

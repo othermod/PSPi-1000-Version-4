@@ -1,0 +1,1 @@
+dtoverlay=i2c0,pins_44_45

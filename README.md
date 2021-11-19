@@ -14,5 +14,5 @@ A total rewrite of this board's software is in progress, to make it work with th
 - [x] Create downloadable image that can be flashed to an SD. Download [Torrent](https://othermod.com/wp-content/uploads/PSPi-Version-4-for-original-Pi-Zero-2021.11.18.torrent)
 
 + ### Progress for the Raspberry Pi Zero 2 W (will bring everything over once the original Zero is working):
-- [ ] Install necessary updates and hacks to get PWM audio working on the new version of the OS
+- [x] Install necessary updates and hacks to get PWM audio working on the new version of the OS
 - [ ] Create downloadable image that can be flashed to an SD
