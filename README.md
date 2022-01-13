@@ -11,10 +11,10 @@ A total rewrite of this board's software is in progress, to make it work with th
 - [x] Get PWM audio working
 - [x] Configure controller buttons in EmulationStation
 - [x] Configure controller buttons in Retroarch and games
-- [x] Create downloadable image that can be flashed to an SD. Download [Torrent](https://othermod.com/wp-content/uploads/PSPi-Version-4-for-original-Pi-Zero-2021.11.18.torrent)
+- [x] Create downloadable image that can be flashed to an SD. [Download at othermod.com](https://othermod.com/downloads/)
 
 + ### Progress for the Raspberry Pi Zero 2 W:
 - [x] Install necessary updates and hacks to get PWM audio working on the new version of the OS
-- [ ] Get PWM brightness control working (pi-blaster is currently not working)
+- [ ] Get PWM brightness control working (pi-blaster is currently not working, waiting for updates to happen)
 - [ ] Enable the Volume-, Volume+, and Mute buttons
-- [x] Create downloadable image that can be flashed to an SD. Download [Torrent](https://othermod.com/wp-content/uploads/PSPi-Version-4-for-new-Pi-Zero-2-W-2021.11.19.torrent)
+- [x] Create downloadable image that can be flashed to an SD. [Download at othermod.com](https://othermod.com/downloads/)
